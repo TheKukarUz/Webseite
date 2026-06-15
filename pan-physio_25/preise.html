@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preise — PAN Physio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050810;--bg2:#080C18;--bg3:#0D1220;
+  --gold:#C9A84C;--gold2:#E8C97A;--gold-dim:rgba(201,168,76,0.12);
+  --white:#F0EDE8;--muted:rgba(240,237,232,0.45);--border:rgba(201,168,76,0.18);
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--gold) var(--bg);}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+body{background:#060810;color:var(--white);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
+#cur,#cur-ring{pointer-events:none;z-index:9999;position:fixed;border-radius:50%;transform:translate(-50%,-50%);}
+#cur{width:10px;height:10px;background:var(--gold);transition:width .3s,height .3s;}
+#cur-ring{width:36px;height:36px;border:1px solid rgba(201,168,76,0.5);z-index:9998;transition:width .3s,height .3s,opacity .3s;}
+@media(hover:none){#cur,#cur-ring{display:none;}body{cursor:auto;}}
+body:has(a:hover) #cur,body:has(button:hover) #cur{width:18px;height:18px;}
+body:has(a:hover) #cur-ring,body:has(button:hover) #cur-ring{width:54px;height:54px;opacity:.4;}
+
+#nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:rgba(8,10,12,0.97);transition:background .4s,padding .3s;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;cursor:none;height:38px;}
+.nav-brand{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;color:var(--white);letter-spacing:0.08em;line-height:1;}
+.nav-brand em{font-style:normal;color:var(--gold);font-weight:200;letter-spacing:0.20em;font-family:'DM Sans',sans-serif;}
+.nav-logo svg{height:32px;width:auto;fill:var(--gold);transition:fill .3s;}
+.nav-logo:hover svg{fill:var(--gold2);}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;cursor:none;}
+.nav-links a:hover{color:var(--gold);}
+.nav-cta{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;padding:10px 22px;border:1px solid var(--gold);color:var(--gold);background:transparent;cursor:none;transition:background .3s,color .3s;}
+.nav-cta:hover{background:var(--gold);color:var(--bg);}
+.nav-burger{display:flex;flex-direction:column;gap:5px;background:none;border:none;padding:4px;cursor:pointer;}
+.nav-burger span{display:block;width:22px;height:1.5px;background:var(--gold);transition:transform .3s,opacity .3s;}
+@media(max-width:820px){#nav{padding:16px 20px;}.nav-links{display:none;}.nav-cta{display:none;}.nav-burger{display:flex;}}
+.mobile-menu{position:fixed;inset:0;z-index:9999;background:rgba(8,10,12,0.98);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s;}
+.mobile-menu.open{opacity:1;visibility:visible;}
+.mm-divider{width:40px;height:1px;background:rgba(201,168,76,0.2);margin:8px 0;}
+.mobile-menu a{font-family:'Playfair Display',serif;font-size:clamp(26px,6vw,40px);color:var(--white);text-decoration:none;transition:color .3s;}
+.mobile-menu a:hover{color:var(--gold);}
+.mobile-close{position:absolute;top:18px;right:22px;background:none;border:none;color:var(--gold);font-size:26px;cursor:pointer;z-index:10000;pointer-events:auto;}
+section{padding:100px 0;}
+.section-inner{max-width:1100px;margin:0 auto;padding:0 48px;}
+@media(max-width:600px){.section-inner{padding:0 20px;}section{padding:68px 0;}}
+.section-eyebrow{font-size:10px;letter-spacing:0.4em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:400;line-height:1.1;margin-bottom:44px;}
+.section-title em{font-style:normal;color:var(--gold);font-weight:200;letter-spacing:0.04em;font-family:'DM Sans',sans-serif;}
+/* Über mich */
+#ueber{background:var(--bg);padding-top:140px;}
+.ueber-layout{display:grid;grid-template-columns:1fr 1.65fr;gap:72px;align-items:start;}
+@media(max-width:820px){.ueber-layout{grid-template-columns:1fr;gap:36px;}}
+.ueber-portrait{width:100%;aspect-ratio:3/4;background:var(--bg3);border:1px solid var(--border);position:relative;display:flex;align-items:center;justify-content:center;margin-bottom:20px;overflow:hidden;}
+.ueber-portrait img{width:100%;height:100%;object-fit:cover;display:block;}
+.ueber-portrait-ph{display:flex;flex-direction:column;align-items:center;gap:10px;}
+.pc{position:absolute;width:18px;height:18px;border-color:var(--gold);border-style:solid;opacity:0.55;}
+.pc.tl{top:10px;left:10px;border-width:1px 0 0 1px;}.pc.tr{top:10px;right:10px;border-width:1px 1px 0 0;}
+.pc.bl{bottom:10px;left:10px;border-width:0 0 1px 1px;}.pc.br{bottom:10px;right:10px;border-width:0 1px 1px 0;}
+.ueber-tags{display:flex;flex-wrap:wrap;gap:7px;}
+.ueber-tag{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:5px 12px;border:1px solid var(--border);color:var(--muted);background:none;font-family:'DM Sans',sans-serif;cursor:pointer;transition:border-color .3s,color .3s;}
+.ueber-tag:hover{color:var(--gold);border-color:rgba(201,168,76,0.6);}
+.ueber-intro{font-family:'DM Sans',sans-serif;font-size:clamp(17px,2vw,24px);font-weight:200;color:var(--gold);line-height:1.5;margin-bottom:32px;letter-spacing:0.04em;padding-bottom:32px;border-bottom:1px solid var(--border);}
+.ueber-body{display:flex;flex-direction:column;gap:18px;}
+.ueber-body p{font-size:15px;line-height:1.9;color:rgba(240,237,232,0.72);}
+.ueber-body p strong{color:var(--white);font-weight:500;}
+.ueber-quote{margin:4px 0;padding:22px 26px;border-left:2px solid var(--gold);background:rgba(201,168,76,0.04);}
+.ueber-quote p{font-size:15px;font-weight:300;color:rgba(240,237,232,0.82);line-height:1.80;}
+.portrait-slide{position:absolute;inset:0;opacity:0;transition:opacity 1s ease;display:flex;align-items:center;justify-content:center;}
+.portrait-slide.active{opacity:1;}
+.portrait-slide img{width:100%;height:100%;object-fit:cover;display:block;}
+/* Preise */
+#preise{background:var(--bg);padding-top:140px;}
+.preise-split{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+@media(max-width:700px){.preise-split{grid-template-columns:1fr;}}
+.pb{border:1px solid var(--border);padding:40px;position:relative;}
+.pb.featured{border-color:rgba(201,168,76,0.45);background:rgba(201,168,76,0.04);}
+.pb-badge{position:absolute;top:0;right:0;background:var(--gold);color:var(--bg);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;padding:6px 16px;font-weight:500;}
+.pb-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;margin-bottom:6px;}
+.pb-sub{font-size:12px;color:var(--muted);margin-bottom:28px;letter-spacing:0.08em;}
+.pb ul{list-style:none;}
+.pb li{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid rgba(201,168,76,0.1);font-size:14px;}
+.pb li:last-child{border-bottom:none;}
+.pb .dur{color:var(--muted);}
+.pb .price{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--gold);letter-spacing:0.04em;}
+/* Footer */
+footer{padding:36px 48px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;background:#030508;}
+@media(max-width:600px){footer{padding:28px 20px;flex-direction:column;align-items:flex-start;}}
+.footer-logo svg{height:24px;width:auto;fill:var(--gold);opacity:0.6;}
+.footer-links{display:flex;gap:24px;flex-wrap:wrap;}
+.footer-links a{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;}
+.footer-links a:hover{color:var(--gold);}
+.footer-copy{font-size:11px;color:rgba(240,237,232,0.25);letter-spacing:0.08em;}
+.lang-sw{display:flex;gap:6px;}
+.lang-btn{background:none;border:none;font-size:10px;letter-spacing:0.2em;color:var(--muted);cursor:pointer;padding:4px 8px;transition:color .3s;}
+.lang-btn.active{color:var(--gold);border-bottom:1px solid var(--gold);}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<nav id="nav">
+  <a href="../index.html#hero" class="nav-logo" aria-label="PAN Physio">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 794.09 744.58" aria-hidden="true">
+      <path d="M150.72,24.69c-10.43-1.39-22.2-4.33-31.85-8.47-7.12-3.05-16.95-7.98-19.14-16.22,7.27,2.55,16.1,4.45,23.78,5,124.76,8.99,359.17-41.88,420.74,104.17,40.76,96.68-30.61,177.87-114.35,215.36-118.26,52.95-389.33,44.07-401,219.38-13.25,199,297.13,223.24,311.11,14.95l.1-198.24c24.62-5.55,48.72-12.14,72.22-19.91-.19,25.51.26,51.07.08,76.6-.79,111.13,13.54,226.35-95.64,294.41-142.73,88.98-349.08-12.11-311.99-190.3,36.68-176.21,286.77-149.81,403.49-223.47,108.94-68.76,99.62-229.74-30.48-264.19-49.85-13.2-105.12-5.13-156.3-7.41v324.24l-70.75,19.75V24.69Z"/>
+      <path d="M417.29,455.92v-21.38c92.14-15.32,215.77-32.93,245.98-138.25,26.69-93.04-19.38-182.99-117.06-198.32-4.1-9.14-9.89-18.3-17.05-25.52,39.72.92,82.74,7.43,118.5,25.46,112.44,56.71,125.3,189.76,31.25,271.63-73.45,63.94-171.12,66.04-261.62,86.39Z"/>
+      <path d="M411.66,94.5l1.72,190.77c-21.87,16.7-48.35,26.65-74.31,34.82V94.5c-15.19-4.81-32.74-7.27-44.77-18.54-1.43-1.34-7.58-6.77-5.85-8.48,15.23,6.83,32.01,4.64,48.16,4.99,18.01.39,28.83.27,60.64,0,19-.16,42.28-.04,42.28-.04,2.68,2.58,5.52,5.58,8.38,9.03,3.68,4.44,6.65,8.74,9.04,12.64-1.41.01-15.26.14-45.27.4Z"/>
+      <path d="M221.47,386.79v180.23c0,10.31-5.33,19.7-7.34,23.93-13.07,27.44-45.3,42.58-74.93,41.07,5.7-8.83,10.29-18.12,11.5-28.8l.28-192.29c1.14-3.35,25.9-11.63,31.06-13.37,12.85-4.34,26.24-7.62,39.43-10.76Z"/>
+    </svg>
+    <span class="nav-brand">PAN <em>Physio</em></span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="../index.html#leistungen" data-lang="nav-leistungen">Leistungen</a></li>
+    <li><a href="../index.html#praxen" data-lang="nav-praxen">Praxen</a></li>
+    <li><a href="preise.html" data-lang="nav-preise">Preise</a></li>
+    <li><a href="../index.html#testimonials" data-lang="nav-testimonials">Rezensionen</a></li>
+    <li><a href="ueber_mich.html" data-lang="nav-ueber">&#xDC;ber mich</a></li>
+    <li><a href="../index.html#kontakt" data-lang="nav-kontakt">Kontakt</a></li>
+  </ul>
+  <div id="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('de')" id="btn-de">DE</button>
+    <div class="lang-divider"></div>
+    <button class="lang-btn" onclick="setLang('en')" id="btn-en">EN</button>
+  </div>
+  <button class="nav-cta" data-lang="nav-cta" onclick="window.location='../index.html#kontakt'">Termin buchen</button>
+  <button class="nav-burger" id="mb" onclick="openMM()"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mm">
+  <button class="mobile-close" id="mc">&#x2715;</button>
+  <a href="../index.html#leistungen" onclick="closeMM()" data-lang="nav-leistungen">Leistungen</a>
+  <a href="../index.html#praxen" onclick="closeMM()" data-lang="nav-praxen">Praxen</a>
+  <a href="preise.html" onclick="closeMM()" data-lang="nav-preise">Preise</a>
+  <a href="../index.html#testimonials" onclick="closeMM()" data-lang="nav-testimonials">Rezensionen</a>
+  <a href="ueber_mich.html" onclick="closeMM()" data-lang="nav-ueber">&#xDC;ber mich</a>
+  <a href="../index.html#kontakt" onclick="closeMM()" data-lang="nav-kontakt">Kontakt</a>
+  <div class="mm-divider"></div>
+  <a href="#" onclick="closeReviews();openImpressum();closeMM();" style="font-size:13px;opacity:0.5;">Impressum</a>
+  <a href="#" onclick="closeDatenschutz();openDatenschutz();closeMM();" style="font-size:13px;opacity:0.5;">Datenschutz</a>
+</div>
+
+<section id="preise">
+  <div class="section-inner">
+    <div class="reveal"><div class="section-eyebrow" data-lang="eyebrow-preise">Transparente Kosten</div><h2 class="section-title" data-lang="title-preise">Meine <em>Preise</em></h2></div>
+    <div class="preise-split reveal">
+      <div class="pb">
+        <div class="pb-title" data-lang="pb-title-praxis">In der Praxis</div>
+        <div class="pb-sub" data-lang="pb-sub-praxis">Behandlung in einer meiner Praxen</div>
+        <ul>
+          <li><span class="dur">30 Minuten</span><span class="price">55,&ndash; &euro;</span></li>
+          <li><span class="dur">45 Minuten</span><span class="price">75,&ndash; &euro;</span></li>
+          <li><span class="dur">60 Minuten</span><span class="price">95,&ndash; &euro;</span></li>
+        </ul>
+      </div>
+      <div class="pb featured">
+        <div class="pb-badge">Empfohlen</div>
+        <div class="pb-title" data-lang="preis-haus">Hausbesuch</div>
+        <div class="pb-sub" data-lang="pb-sub-haus">Therapie direkt bei Ihnen zuhause</div>
+        <ul>
+          <li><span class="dur">30 Minuten</span><span class="price">80,&ndash; &euro;</span></li>
+          <li><span class="dur">45 Minuten</span><span class="price">100,&ndash; &euro;</span></li>
+          <li><span class="dur">60 Minuten</span><span class="price">125,&ndash; &euro;</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="reveal" style="margin-top:32px;">
+      <div class="pb" style="width:100%;max-width:none;box-sizing:border-box;">
+        <h3 class="pb-title" data-lang="pb-title-bgf">Betriebliche Gesundheitsf&ouml;rderung</h3>
+        <p class="pb-sub" data-lang="pb-sub-bgf">Workshop f&uuml;r Unternehmen &amp; Firmen</p>
+        <ul class="pb-list">
+          <li><span class="dur">Workshop</span><span class="price" data-lang="preis-anfrage">Preis auf Anfrage</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="reveal" data-lang="preis-disclaimer" style="margin-top:18px;font-size:12px;color:var(--muted);">Die Verrechnung erfolgt als Wahltherapie. Eine teilweise R&uuml;ckerstattung durch die gesetzliche Krankenkasse ist je nach Versicherung und Verordnung m&ouml;glich.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 794.09 744.58" aria-label="PAN Physio">
+      <path d="M150.72,24.69c-10.43-1.39-22.2-4.33-31.85-8.47-7.12-3.05-16.95-7.98-19.14-16.22,7.27,2.55,16.1,4.45,23.78,5,124.76,8.99,359.17-41.88,420.74,104.17,40.76,96.68-30.61,177.87-114.35,215.36-118.26,52.95-389.33,44.07-401,219.38-13.25,199,297.13,223.24,311.11,14.95l.1-198.24c24.62-5.55,48.72-12.14,72.22-19.91-.19,25.51.26,51.07.08,76.6-.79,111.13,13.54,226.35-95.64,294.41-142.73,88.98-349.08-12.11-311.99-190.3,36.68-176.21,286.77-149.81,403.49-223.47,108.94-68.76,99.62-229.74-30.48-264.19-49.85-13.2-105.12-5.13-156.3-7.41v324.24l-70.75,19.75V24.69Z"/>
+      <path d="M417.29,455.92v-21.38c92.14-15.32,215.77-32.93,245.98-138.25,26.69-93.04-19.38-182.99-117.06-198.32-4.1-9.14-9.89-18.3-17.05-25.52,39.72.92,82.74,7.43,118.5,25.46,112.44,56.71,125.3,189.76,31.25,271.63-73.45,63.94-171.12,66.04-261.62,86.39Z"/>
+      <path d="M411.66,94.5l1.72,190.77c-21.87,16.7-48.35,26.65-74.31,34.82V94.5c-15.19-4.81-32.74-7.27-44.77-18.54-1.43-1.34-7.58-6.77-5.85-8.48,15.23,6.83,32.01,4.64,48.16,4.99,18.01.39,28.83.27,60.64,0,19-.16,42.28-.04,42.28-.04,2.68,2.58,5.52,5.58,8.38,9.03,3.68,4.44,6.65,8.74,9.04,12.64-1.41.01-15.26.14-45.27.4Z"/>
+      <path d="M221.47,386.79v180.23c0,10.31-5.33,19.7-7.34,23.93-13.07,27.44-45.3,42.58-74.93,41.07,5.7-8.83,10.29-18.12,11.5-28.8l.28-192.29c1.14-3.35,25.9-11.63,31.06-13.37,12.85-4.34,26.24-7.62,39.43-10.76Z"/>
+    </svg>
+  </div>
+  <nav class="footer-links">
+    <a href="ueber_mich.html" onclick="closeMM()" data-lang="nav-ueber">&#xDC;ber mich</a><a href="../index.html#leistungen" onclick="closeMM()" data-lang="nav-leistungen">Leistungen</a>
+    <a href="preise.html" onclick="closeMM()" data-lang="nav-preise">Preise</a><a href="portfolio_33.html" target="_blank">Benedikt Pani&#x107;</a>
+    <a href="../index.html#kontakt" onclick="closeMM()" data-lang="nav-kontakt">Kontakt</a>
+    <a href="#" onclick="window.location='../index.html#impressum';return false;" data-lang="footer-impressum">Impressum</a><a href="#" onclick="window.location='../index.html#datenschutz';return false;" data-lang="footer-datenschutz">Datenschutz</a>
+  </nav>
+  <div class="footer-copy" data-lang="footer-copy">&copy; 2026 PAN Physio. Alle Rechte vorbehalten.</div>
+</footer>
+
+<script>
+// Cursor
+(function(){
+  const c=document.getElementById('cur'), r=document.getElementById('cur-ring');
+  if(!c||!r) return;
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;c.style.left=mx+'px';c.style.top=my+'px';});
+  (function loop(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;r.style.left=rx+'px';r.style.top=ry+'px';requestAnimationFrame(loop);})();
+})();
+
+// Nav scroll
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY>40);
+},{passive:true});
+
+// Mobile menu
+function openMM(){document.querySelector('.mobile-menu').classList.add('open');}
+function closeMM(){document.querySelector('.mobile-menu').classList.remove('open');}
+
+// Werdegang modal
+function openWerdegang(){document.getElementById('werdegang-modal').classList.add('open');}
+function closeWerdegang(){document.getElementById('werdegang-modal').classList.remove('open');}
+
+// Translations
+const TRANSLATIONS = {
+  // ══════════════════════════════════════════════════════
+  // DEUTSCH — alle Keys hier pflegen
+  // ══════════════════════════════════════════════════════
+  de: {
+    // Navigation
+    'nav-cta':            'Termin buchen',
+    'nav-ueber':          '\u00dcber mich',
+    'nav-leistungen':     'Leistungen',
+    'nav-preise':         'Preise',
+    'nav-testimonials':   'Rezensionen',
+    'nav-kontakt':        'Kontakt',
+    // Hero
+    'hero-eyebrow':       'Physiotherapie \u2014 Wahltherapeut',
+    'hero-title':         'Du im Mittelpunkt.<br><em>Gemeinsam zu mehr.</em>',
+    'hero-tagline':       'Individuelle Therapie nach Ma\u00df \u2014 in der Praxis oder direkt bei Ihnen zu Hause.',
+    // Termin Slogan
+    'ts-title':           'Termin ohne <em>Wartezeit</em>',
+    'ts-sub':             'Bei anderen noch auf der Warteliste \u2014 bei mir schon in der Therapie.',
+    // \u00dcber mich
+    'eyebrow-ueber':      'Wer ich bin, f\u00fcr was ich stehe',
+    'title-ueber':        '\u00dcber <em>mich</em>',
+    'tag-physiotherapie': 'Physiotherapie',
+    'tag-haus':           'Hausbesuche',
+    'tag-mikron\u00e4hrstoffe': 'Mikron\u00e4hrstoffe',
+    'tag-mikronährstoffe': 'Mikronährstoffe',
+    'tag-motivational-interviewing': 'Motivational Interviewing',
+    'tag-betriebliche':   'Betriebliche Gesundheitspr\u00e4vention',
+    'ueber-tagline':      'Zwischen Symptom und Ursache liegt oft eine Geschichte, die Aufmerksamkeit verdient.',
+    // Über mich — individuelle Absatz-Keys
+    'ueber-p1':    'Jeder Mensch bringt seine eigene Geschichte, seine eigenen Gewohnheiten, Belastungen, Gedanken und Muster mit. Genau deshalb interessiert mich Physiotherapie nicht nur als Behandlung einzelner Beschwerden, sondern als Möglichkeit, <strong>den Menschen als Ganzes besser zu verstehen.</strong>',
+    'ueber-p2':    'Mein Interesse für den menschlichen Körper begann schon früh. Durch eine Verletzung in meiner Kindheit kam ich das erste Mal intensiver mit dem Thema Gesundheit und Rehabilitation in Berührung. Sport, körperliche Aktivität und das Verständnis dafür, wie unglaublich anpassungsfähig und komplex der menschliche Körper ist, haben mich seitdem fasziniert.',
+    'ueber-quote': 'Ich weiß aber auch, wie es ist, stundenlang vor dem Computer zu sitzen, zu wenig auf sich zu achten, Schlafrhythmen zu verschieben. Gerade deshalb wollte ich verstehen, wie Gesundheit wirklich funktioniert — nicht theoretisch, sondern im echten Leben.',
+    'ueber-p4':    'Mich faszinieren Zusammenhänge. Bewegung, Stress, mentale Gesundheit, Schmerzverständnis, Regeneration, Motivation — und die Frage, warum manche Menschen langfristig gesund bleiben und andere trotz vieler Maßnahmen nicht wirklich vorankommen.',
+    'ueber-p5':    'Gesundheit bedeutet für mich nicht Perfektion. Gesundheit bedeutet, den eigenen Körper besser zu verstehen, bewusster mit sich umzugehen und langfristig Wege zu finden, die wirklich zum eigenen Leben passen.',
+    'ueber-p6':    'Ich möchte ein Therapeut sein, zu dem unterschiedlichste Menschen kommen können — jung oder älter, sportlich oder mit Stress und Schmerzen. Eine Praxis, in der jeder seinen Platz finden darf.',
+    'ueber-link':         'Hier erf\u00e4hrst du genaueres \u00fcber mich und meinen Werdegang \u2192',
+    // Preisblöcke
+    'eyebrow-preise':     'Transparente Kosten',
+    'title-preise':       'Meine <em>Preise</em>',
+    'pb-title-praxis':    'In der Praxis',
+    'pb-sub-praxis':      'Behandlung in einer meiner Praxen',
+    'pb-sub-haus':        'Therapie direkt bei Ihnen zuhause',
+    // Rezensionen
+    'title-testimonials': 'Rezensionen, die <em>zählen</em>',
+    'rev-title':          'Rezensionen <em>schreiben</em>',
+    // Werdegang
+    'wg-eyebrow':         'Mein Weg',
+    'wg-title':           'Mein Weg',
+    'wg-body':            `<div class="imp-section">
+      <p class="imp-section-title">Ausbildung</p>
+      <p>
+        2025 schloss ich mein Studium der Physiotherapie an der FH Salzburg erfolgreich ab. Bereits w&auml;hrend des Studiums entwickelte ich ein starkes Interesse f&uuml;r ganzheitliche Gesundheitsans&auml;tze und absolvierte erg&auml;nzende Lehrg&auml;nge und Weiterbildungen im Bereich Mikron&auml;hrstoffe und Gesundheitsf&ouml;rderung.
+      </p>
+      <p style="margin-top:14px;">
+        Im Anschluss vertiefte ich mich intensiv in Themen rund um Regeneration, Leistungsf&auml;higkeit und Biohacking. Daraus entstand auch die Weiterbildung im Bereich des intermittierenden Hypoxie-Hyperoxie-Trainings (IHHT), welches heute einen erg&auml;nzenden Bestandteil meines gesundheitsorientierten Ansatzes darstellt.
+      </p>
+      <p style="margin-top:14px;">
+        2026 folgte zus&auml;tzlich die Ausbildung im Bereich Motivational Interviewing &ndash; einer wissenschaftlich fundierten Kommunikationsmethode zur Unterst&uuml;tzung nachhaltiger Verhaltens&auml;nderungen. Dieser Ansatz pr&auml;gt heute wesentlich meine therapeutische Arbeit und den gemeinsamen Prozess mit meinen Patientinnen und Patienten.
+      </p>
+    </div>
+
+    <div class="imp-section">
+      <p class="imp-section-title">Praktische Erfahrung</p>
+      <p>
+        Im Rahmen meiner praktischen T&auml;tigkeit konnte ich sowohl in &Ouml;sterreich als auch in Deutschland vielseitige Erfahrungen sammeln.
+      </p>
+      <p style="margin-top:14px;">
+        Praktische Einblicke und klinische Erfahrung sammelte ich unter anderem an der Universit&auml;tsklinikum Salzburg (SALK), im UKH Salzburg sowie am Klinikum Altm&uuml;hlfranken in Deutschland.
+      </p>
+      <p style="margin-top:14px;">
+        Dar&uuml;ber hinaus war ich in freiberuflichen physiotherapeutischen Praxen sowie in Rehabilitationseinrichtungen t&auml;tig. Dadurch konnte ich Menschen mit unterschiedlichsten Beschwerden, Voraussetzungen und Zielen begleiten &ndash; von akuten orthop&auml;dischen Problematiken bis hin zu langfristigen rehabilitativen Prozessen.
+      </p>
+      <p style="margin-top:14px;">
+        Diese vielseitigen Erfahrungen haben meinen therapeutischen Blick gepr&auml;gt: individuell, funktionell und stets orientiert an der Lebensrealit&auml;t des Menschen.
+      </p>
+      <p style="margin-top:14px;">
+        Zus&auml;tzlich bin ich im Bereich der betrieblichen Gesundheitsf&ouml;rderung t&auml;tig und leite Workshops in Unternehmen zu Themen wie ergonomisches Arbeiten, gesundheitsf&ouml;rdernde Bewegung im Berufsalltag sowie Belastungsmanagement.
+      </p>
+      <p style="margin-top:14px;">
+        Dabei steht insbesondere die praxisnahe Vermittlung von Strategien im Vordergrund, die sich nachhaltig und realistisch in den Arbeitsalltag integrieren lassen.
+      </p>
+    </div>
+
+    <div class="imp-section">
+      <p class="imp-section-title">Pers&ouml;nliches</p>
+      <p>
+        Zeit ist ein wesentlicher Faktor in jeder Therapie. Oft wird sie knapp &ndash; und genau das m&ouml;chte ich bewusst anders gestalten. Ich nehme mir die Zeit und plane Behandlungen so, dass sich jede Patientin und jeder Patient gesehen, verstanden und ernst genommen f&uuml;hlen kann.
+      </p>
+      <p style="margin-top:14px;">
+        Mir ist wichtig, nicht nur einzelne Symptome isoliert zu betrachten, sondern gemeinsam zu verstehen, welche Faktoren Beschwerden beeinflussen und welche Schritte langfristig sinnvoll und realistisch umsetzbar sind. Dabei stehen f&uuml;r mich Aufmerksamkeit, ehrliche Kommunikation und eine individuelle Begleitung im Vordergrund.
+      </p>
+      <p style="margin-top:14px;">
+        Jeder Mensch bringt unterschiedliche Voraussetzungen, Erfahrungen und Ziele mit. Genau deshalb soll Therapie nicht nach einem starren Schema ablaufen, sondern an die jeweilige Situation angepasst werden &ndash; fachlich fundiert, alltagsnah und auf Augenh&ouml;he.
+      </p>
+      <p style="margin-top:14px;">
+        Besonders wichtig ist mir au&szlig;erdem eine aktive Zusammenarbeit. Nachhaltige Ver&auml;nderung entsteht meist nicht durch kurzfristige L&ouml;sungen, sondern durch ein gemeinsames Verst&auml;ndnis, passende Strategien und kleine Schritte, die langfristig integrierbar sind.
+      </p>
+    </div>
+
+    <div class="imp-section">
+      <p class="imp-section-title">Zertifikate</p>
+      <p style="color:rgba(201,168,76,0.55);font-size:13px;font-weight:300;letter-spacing:0.04em;">
+        Wird in K&uuml;rze aktualisiert.
+      </p>
+    </div>`,
+    // Leistungen
+    'eyebrow-leistungen': 'Was ich anbiete',
+    'title-leistungen':   'Meine <em>Leistungen</em>',
+    'lk-more':             'Mehr',
+    'lk-less':             'Weniger',
+    'lk-title-physio':    'Physiotherapie & Bewegungstherapie',
+    'lk-desc-physio':     'Individuell angepasste Therapie zur Verbesserung von Beweglichkeit, Belastbarkeit und k\u00f6rperlicher Funktion \u2014 evidenzbasiert, aufmerksam und auf die pers\u00f6nliche Lebensrealit\u00e4t abgestimmt.',
+    'lk-title-haus':      'Hausbesuche',
+    'lk-desc-haus':       'Therapeutische Betreuung im gewohnten Umfeld. Besonders sinnvoll bei eingeschr\u00e4nkter Mobilit\u00e4t, nach Operationen oder wenn der Weg in die Praxis zus\u00e4tzlichen Stress verursacht.',
+    'lk-title-regen':     'Regeneration & Gesundheitsfaktoren',
+    'lk-desc-regen':      'Gesundheit wird von vielen Faktoren beeinflusst. Deshalb flie\u00dfen bei Bedarf auch Themen wie Stressregulation, Schlaf, Belastungsmanagement, K\u00f6rperwahrnehmung sowie Grundlagen der Mikron\u00e4hrstoffversorgung in die therapeutische Betrachtung mit ein \u2014 immer individuell und alltagsnah.',
+    'lk-title-mi':        'Motivational Interviewing',
+    'lk-desc-mi':         'Gespr\u00e4chsorientierter Ansatz zur F\u00f6rderung nachhaltiger Ver\u00e4nderungen. Ziel ist nicht kurzfristige Motivation, sondern langfristige Selbstwirksamkeit und ein besseres Verst\u00e4ndnis f\u00fcr den eigenen K\u00f6rper.',
+    'lk-title-bgf':       'Betriebliche Gesundheitsprävention',
+    'lk-desc-bgf':        'Gesundheitsf\u00f6rdernde Workshops und Ma\u00dfnahmen f\u00fcr Unternehmen und Firmen \u2014 zu Themen wie ergonomisches Arbeiten, Belastungsmanagement und gesundheitsf\u00f6rdernde Bewegung im Berufsalltag. Praxisnah, nachhaltig und auf den Arbeitsalltag abgestimmt.',
+    // Preise
+    'preis-praxis':       'Praxis',
+    'preis-haus':         'Hausbesuch',
+    'preis-bgf':          'Betriebliche Gesundheitsf\u00f6rderung',
+    'preis-anfrage':      'Preis auf Anfrage',
+    'pb-title-bgf':       'Betriebliche Gesundheitsförderung',
+    'pb-sub-bgf':         'Workshop für Unternehmen & Firmen',
+    'preis-disclaimer':   'Die Verrechnung erfolgt als Wahltherapie. Eine teilweise Rückerstattung durch die gesetzliche Krankenkasse ist je nach Versicherung und Verordnung möglich.',
+    // Rezensionen
+    'eyebrow-testimonials': 'Stimmen meiner Patienten',
+    'btn-rev-write':        'Rezension schreiben',
+    'rev-list-title':       'Bisherige <em>Rezensionen</em>',
+    'rev-eyebrow':          'Ihre Erfahrung',
+    'rev-subtitle':         'Teilen Sie Ihre Erfahrung mit PAN Physio. Jede Rezension wird vor Ver\u00f6ffentlichung gepr\u00fcft.',
+    'btn-submit':           'Rezension absenden',
+    // Kontakt
+    'eyebrow-kontakt':    'Ich freue mich auf Sie',
+    'title-kontakt':      'Termin <em>vereinbaren</em>',
+    'kontakt-tel':        'Telefon',
+    'kontakt-email':      'E-Mail',
+    'kontakt-adresse':    'Adresse',
+    'kontakt-oeffnung':   '\u00d6ffnungszeiten',
+    'kontakt-tage':       'Montag \u2013 Freitag',
+    'kontakt-zeit':       'Nach Vereinbarung',
+    // Codebox
+    'scb-label':          'Code eingeben',
+    // Footer
+
+    // ── Termin-Formular ────────────────────────────────
+    'f-vorname':          'Vorname',
+    'f-nachname':         'Nachname',
+    'f-email':            'E-Mail',
+    'f-leistung-label':   'Leistung',
+    'f-nachricht-label':  'Ihre Nachricht',
+    'f-opt-bitte':        'Bitte wählen…',
+    'f-opt-praxis':       'Physiotherapie — Praxis',
+    'f-opt-haus':         'Physiotherapie — Hausbesuch',
+    'f-submit':           'Anfrage senden →',
+    'f-ph-vorname':       'Max',
+    'f-ph-nachname':      'Mustermann',
+    'f-ph-email':         'ihre@email.at',
+    'f-ph-nachricht':     'Beschreiben Sie kurz Ihr Anliegen…',
+    // ── Rezensions-Formular ────────────────────────────
+    'rv-vorname':         'Vorname *',
+    'rv-ort':             'Ort',
+    'rv-bewertung':       'Bewertung *',
+    'rv-text-label':      'Ihre Rezension *',
+    'rv-ph-name':         'Max',
+    'rv-ph-ort':          'Wels',
+    'rv-ph-text':         'Beschreiben Sie Ihre Erfahrung mit PAN Physio…',
+    'footer-copy':        '\u00a9 2026 PAN Physio. Alle Rechte vorbehalten.',
+    'footer-impressum':   'Impressum',
+    'footer-datenschutz': 'Datenschutz',
+    // Easter Eggs
+    'egg1-label':  'Aufmerksamkeit \u2014 Easter Egg entdeckt',
+    'egg1-title':  'Gratuliere.',
+    'egg1-body':   `<p>Du geh\u00f6rst zu den wenigen Menschen, die sich die Zeit nehmen, wirklich genau hinzusehen.</p>
+      <p>Vielleicht lag es an deiner Bildschirmgr\u00f6\u00dfe, mag sein. Ich glaube aber, dass etwas anderes dahintersteckt: <em style="color:rgba(240,237,232,0.7)">Aufmerksamkeit.</em> Die F\u00e4higkeit, Details wahrzunehmen, Zusammenh\u00e4nge zu erkennen und mit einer gewissen Neugier durchs Leben zu gehen.</p>
+      <div class="egg-divider"></div>
+      <p>Genau darauf kommt es an \u2013 hier genauso wie in der Physiotherapie. Die kleinen Dinge zu sehen. Nuancen zu erkennen. Bewegungen, Gewohnheiten und Spannungen bewusst wahrzunehmen.</p>
+      <p>Oft entstehen die gr\u00f6\u00dften Ver\u00e4nderungen aus scheinbar kleinen Details. Ein minimal angepasstes Bewegungsmuster. Eine bewusstere Haltung. Ein neuer Blickwinkel.</p>
+      <div class="egg-divider"></div>
+      <p>Ich glaube, echte Qualit\u00e4t entsteht dort, wo Menschen bereit sind, genauer hinzusehen. Mit Ruhe. Mit Interesse. Mit Pr\u00e4zision.</p>
+      <p>Dass du dieses kleine Easter Egg gefunden hast, zeigt auf jeden Fall eines: Du hast ein Auge f\u00fcr Details.<br>Und das freut mich ehrlich.</p>
+      <div class="egg-divider"></div>
+      <p>Vielleicht war das noch nicht alles.<br>Wer aufmerksam bleibt, entdeckt manchmal mehr als nur das Offensichtliche.</p>`,
+    'egg2-theme':  'Neugier',
+    'egg3-label':  'Präzision & Timing — Drittes Geheimnis freigeschaltet',
+    'egg3-title':  'Das war jetzt wirklich unerwartet.',
+    'egg3-body':   `<p>Du hast Snake durchgespielt. Das schafft kaum jemand.</p>
+      <p>Ernsthaft \u2014 ich hab das eingebaut und selbst noch nie gewonnen.</p>
+      <div style="width:24px;height:1px;background:rgba(201,168,76,0.25);margin:20px 0;"></div>
+      <p>Was du gerade gezeigt hast, hat einen Namen:</p>
+      <p style="color:rgba(240,237,232,0.7);font-size:15px;"><em style="color:rgba(201,168,76,0.7);font-style:italic;">Pr\u00e4zision und Timing.</em></p>
+      <p>Jede Bewegung der Schlange war eine Entscheidung. Zu fr\u00fch abbiegen \u2014 verloren. Zu sp\u00e4t \u2014 auch verloren. Genau im richtigen Moment, genau in die richtige Richtung.</p>
+      <p>Das ist kein Zufall.<br>Das ist Kontrolle.</p>
+      <div style="width:24px;height:1px;background:rgba(201,168,76,0.25);margin:20px 0;"></div>
+      <p>Genau dasselbe gilt auch in der Physiotherapie.</p><p>Pr\u00e4zision. Timing.</p>
+      <p>Ein zu fr\u00fch gesetzter Reiz kann Beschwerden verschlimmern, ein falsch gesetzter Reiz sogar neue Symptome hervorbringen. Der Zeitpunkt, wann man welche Technik mit welcher Intensit\u00e4t setzt, ist individuell. Ein Schritt, der nicht zur aktuellen Belastbarkeit passt \u2014 und der Fortschritt stockt.</p>
+      <p>Und genau da beginnt die Kunst von uns Physios.</p>
+      <div style="width:24px;height:1px;background:rgba(201,168,76,0.25);margin:20px 0;"></div>
+      <p>Also, lieber Snake-K\u00f6nig, liebe Snake-K\u00f6nigin:</p>
+      <p>Halt weiterhin die Augen offen.</p><p>Bis bald,<br>Benedikt</p>`,
+    'egg4-label':  'Gedächtnis & Zusammenhänge — Zweites Geheimnis freigeschaltet',
+    'egg4-title':  'Du hast den Code gefunden.',
+    'egg4-body':   `<p>Sich Informationen zu merken, w\u00e4hrend st\u00e4ndig Neues hinzukommt, ist schwieriger, als es zun\u00e4chst scheint.</p>
+      <p>Genau deshalb faszinieren mich Details. In der Therapie sind es oft kleine Hinweise, die den Unterschied machen \u2013 eine beil\u00e4ufige Bemerkung, eine Bewegung oder ein Muster, das sich erst sp\u00e4ter erkennen l\u00e4sst.</p>
+      <div class="egg4-divider"></div>
+      <p>Aufmerksamkeit endet nicht mit dem ersten Eindruck.<br>Sie beginnt dort erst richtig.</p>
+      <div class="egg4-divider"></div>
+      <p>Du hast dir die Buchstaben gemerkt, obwohl niemand dich dazu aufgefordert hat. Keine Erinnerung, keine Notiz, kein Hinweis. Nur Aufmerksamkeit, Ged\u00e4chtnis und ein wenig Neugier.</p>
+      <p>Interessanterweise ist genau das ein Teil meines Berufsalltags. W\u00e4hrend einer Behandlung entstehen viele kleine Informationen: Bewegungsmuster, Aussagen, Gewohnheiten, Ziele und Beobachtungen.</p>
+      <p>Manche davon landen sp\u00e4ter in der Dokumentation. Andere bleiben zun\u00e4chst im Kopf, bis sie beim n\u00e4chsten Termin wieder relevant werden.</p>
+      <div class="egg4-divider"></div>
+      <p>Gute Therapie besteht nicht nur darin, Bewegungen zu erkennen, sondern auch darin, Zusammenh\u00e4nge zu behalten und Details \u00fcber die Zeit hinweg einordnen zu k\u00f6nnen.</p>
+      <p>Wer aufmerksam bleibt, erkennt oft mehr, als auf den ersten Blick sichtbar ist.</p>
+      <p>Danke, dass du dir die Zeit genommen hast, genauer hinzusehen.</p>`,
+    // ── Satelliten ─────────────────────────────────────
+
+    // ── Gutschein ──────────────────────────────────────
+    'btn-gutschein':      'Gesundheit schenken',
+    'gutschein-eyebrow':  'Für Sie oder jemanden, der Ihnen wichtig ist',
+    'gutschein-title':    'Gesundheit schenken',
+    'gutschein-p1':       'Manche Geschenke bleiben länger in Erinnerung als Dinge. Mit einem PAN Physio Gutschein schenken Sie Aufmerksamkeit und einen Beitrag zu mehr Wohlbefinden.',
+    'gutschein-p2':       'Die Gutscheine sind individuell auf einen frei wählbaren Betrag ausstellbar und werden als hochwertige physische Gutscheinkarte erstellt.',
+    'gutschein-how-title':'So funktioniert\'s',
+    'gutschein-step1':    'Wählen Sie im Kontaktformular unter „Leistung“ den Punkt „Gutschein“ aus.',
+    'gutschein-step2':    'Geben Sie in Ihrer Nachricht den gewünschten Gutscheinwert an.',
+    'gutschein-step3':    'Anschließend erhalten Sie die Rechnung per E-Mail.',
+    'gutschein-step4':    'Nach Zahlungseingang wird Ihr Gutschein vorbereitet.',
+    'gutschein-footer':   'Bei Fragen unterstütze ich Sie gerne telefonisch oder in einer meiner Praxen.',
+    'f-opt-gutschein':    'Gutschein',
+    'f-beschwerden-label': 'Beschwerdebereich (Mehrfachauswahl möglich)',
+    'chip-ruecken':   'Rücken',
+    'chip-nacken':    'Nacken',
+    'chip-schulter':  'Schulter',
+    'chip-knie':      'Knie',
+    'chip-huefte':    'Hüfte',
+    'chip-fuss':      'Fuß / Sprunggelenk',
+    'chip-neuro':     'Neurologische Beschwerden',
+    'chip-postop':    'Postoperative Rehabilitation',
+    'chip-sonstiges': 'Sonstiges',
+    'checklist-title':'Bitte zum Termin mitbringen',
+    'leistung-eyebrow': 'Leistung',
+    'sat-testimonials': 'Rezensionen',
+    'sat-leistungen':   'Leistungen',
+    'sat-preise':       'Preise',
+    'sat-ueber':        'Über mich',
+    'sat-kontakt':      'Kontakt',
+    // ── Snake Easter Egg ──────────────────────────────────
+    'snake-intro-text':    'Wow, du bist echt ein Adlerauge!<br><span style="font-size:0.88em;color:rgba(240,237,232,0.45);">Denkst du, ich hab noch mehr Tricks auf Lager? Nimm dir kurz eine Pause bei einer Runde Snake.</span>',
+    'snake-title':         'Snake \u2014 zweites Geheimnis',
+    'snake-pause-text':    'Dr\u00fcck\u00e9 Leertaste um fortzufahren',
+    'snake-msg-start':     'Dr\u00fccke Start oder Leertaste',
+    'snake-btn-start':     'Start',
+    'snake-btn-pause':     'Pause',
+    'snake-btn-restart':   'Neustart',
+    'snake-btn-close':     'Beenden',
+    'snake-hint':          '\u2190 \u2192 \u2191 \u2193 \u00a0|\u00a0 Pfeiltaste zum Starten',
+    'snake-gameover-prefix': 'Game Over',
+    'snake-gameover-1':    'Nicht schlecht. Probier es nochmal.',
+    'snake-gameover-2':    'Snake ist wie Therapie \u2014 Geduld zahlt sich aus.',
+    'snake-gameover-3':    'Score {s}. Du lernst schnell.',
+    'snake-gameover-4':    'Gut gespielt. Nochmal?',
+    // ── Praxen ────────────────────────────────────────────
+    'eyebrow-praxen':       'Standorte',
+    'title-praxen':         'Meine <em>Praxen</em>',
+    'nav-praxen':           'Praxen',
+    'praxis-ansehen':       'Praxis ansehen',
+    'praxis-oz-title':      'Öffnungszeiten',
+    'praxis-mo':            'Montag',
+    'praxis-di':            'Dienstag',
+    'praxis-mi':            'Mittwoch',
+    'praxis-fr':            'Freitag',
+    'praxis-do':            'Donnerstag',
+    'praxis-saso':          'Sa & So',
+    'praxis-vereinbarung':  'nach Vereinbarung',
+    'praxis-sbg-note':      'jeden zweiten Donnerstag',
+    'praxis-wels-region':   'Oberösterreich',
+    'praxis-sbg-region':    'Salzburg',
+    'praxis-wels-desc':     'Eine meiner Räumlichkeiten befindet sich direkt im Anytime Fitness in Wels. Die moderne Umgebung bietet ideale Voraussetzungen für eine aktive und praxisnahe Therapie. Neben der physiotherapeutischen Behandlung können Bewegungsabläufe gezielt analysiert, Übungen direkt umgesetzt und der Übergang in ein selbstständiges Training optimal begleitet werden.<br><br>Die Therapie richtet sich dabei nicht nur an sportlich aktive Menschen, sondern an alle Personen, die ihre Beweglichkeit, Belastbarkeit und Lebensqualität nachhaltig verbessern möchten.',
+    'praxis-sbg-desc':      'Mein zweiter Praxisstandort befindet sich im 50plus Center in Salzburg. Das Center ist auf die Bedürfnisse älterer Menschen ausgerichtet und bietet ein Umfeld, in dem Bewegung, Selbstständigkeit und Lebensqualität im Mittelpunkt stehen.<br><br>Meine Räumlichkeit ist in diese Struktur eingebunden und ermöglicht physiotherapeutische Betreuung in ruhiger und persönlicher Atmosphäre. Der Standort eignet sich besonders für Menschen, die ihre Mobilität erhalten, im Alltag sicherer werden oder nach gesundheitlichen Veränderungen gezielt begleitet werden möchten.',
+  },
+
+  // ══════════════════════════════════════════════════════
+  // ENGLISH — alle Keys hier pflegen
+  // ══════════════════════════════════════════════════════
+  en: {
+    // Navigation
+    'nav-cta':            'Book an Appointment',
+    'nav-ueber':          'About Me',
+    'nav-leistungen':     'Services',
+    'nav-preise':         'Pricing',
+    'nav-testimonials':   'Reviews',
+    'nav-kontakt':        'Contact',
+    // Hero
+    'hero-eyebrow':       'Physiotherapy \u2014 Private Practitioner',
+    'hero-title':         'You at the centre.<br><em>Achieving more, together.</em>',
+    'hero-tagline':       'Tailored physiotherapy \u2014 in the clinic or in the comfort of your own home.',
+    // Termin Slogan
+    'ts-title':           'No <em>waiting list.</em>',
+    'ts-sub':             'While others are still waiting for an appointment, you\u2019re already in treatment.',
+    // About Me
+    'eyebrow-ueber':      'Who I am and what I stand for',
+    'title-ueber':        'About <em>me</em>',
+    'tag-physiotherapie': 'Physiotherapy',
+    'tag-haus':           'Home Visits',
+    'tag-mikron\u00e4hrstoffe': 'Micronutrients',
+    'tag-motivational-interviewing': 'Motivational Interviewing',
+    'tag-betriebliche':   'Workplace Health',
+    'ueber-tagline':      'Between a symptom and its cause, there is often a story worth paying attention to.',
+    // About Me — individual paragraph keys
+    'ueber-p1':    'Every person brings their own story, habits, challenges, thoughts, and patterns. That is exactly why physiotherapy interests me not merely as a way to treat individual complaints, but as an opportunity to better understand <strong>the person as a whole.</strong>',
+    'ueber-p2':    'My fascination with the human body began early in life. A childhood injury first introduced me to the world of health, rehabilitation, and recovery. Since then, I have been captivated by sport, movement, and the remarkable adaptability and complexity of the human body.',
+    'ueber-quote': 'I also know what it feels like to spend long hours in front of a computer, neglect your own wellbeing, and push healthy routines aside. That is precisely why I wanted to understand how health truly works — not in theory, but in real life.',
+    'ueber-p4':    'What fascinates me most are the connections between things. Movement, stress, mental wellbeing, pain, recovery, motivation — and the question of why some people remain healthy over the long term while others struggle to move forward despite doing many things right.',
+    'ueber-p5':    'To me, health is not about perfection. It is about understanding your body more deeply, becoming more aware of your own needs, and finding sustainable approaches that genuinely fit your life.',
+    'ueber-p6':    'My goal is to be a therapist people from all walks of life feel comfortable turning to — young or old, athletic or simply navigating stress, pain, or the challenges of everyday life. A practice where everyone is welcome. A place where everyone can find their place.',
+    'ueber-link':         'Here you can learn more about me and my journey \u2192',
+    // Preisblöcke
+    'pb-title-praxis':    'In-Clinic Treatment',
+    'pb-sub-praxis':      'Physiotherapy at one of my clinic locations.',
+    'pb-sub-haus':        'Treatment in the comfort of your own home.',
+    // Reviews
+    'rev-title':          'Write a <em>Review</em>',
+    // Werdegang
+    'wg-eyebrow':         'Professional Background',
+    'wg-title':           'My Journey',
+    'wg-body':            `<div class="imp-section">
+      <p class="imp-section-title">Education</p>
+      <p>I successfully completed my degree in Physiotherapy at Salzburg University of Applied Sciences in 2025.</p>
+      <p style="margin-top:14px;">During my studies, I developed a strong interest in holistic approaches to health and wellbeing, which led me to pursue additional training and further education in the fields of micronutrients and health promotion.</p>
+      <p style="margin-top:14px;">Following graduation, I immersed myself in topics related to recovery, performance, and biohacking. This also led to further qualification in Intermittent Hypoxia-Hyperoxia Training (IHHT), which today forms a complementary part of my health-oriented approach.</p>
+      <p style="margin-top:14px;">In 2026, I completed additional training in Motivational Interviewing &mdash; an evidence-based communication method designed to support lasting behavioural change. Today, this approach plays a central role in both my therapeutic work and the collaborative process I share with my patients.</p>
+    </div>
+    <div class="imp-section">
+      <p class="imp-section-title">Professional Experience</p>
+      <p>Throughout my professional journey, I have had the opportunity to gain a broad range of experience in both Austria and Germany.</p>
+      <p style="margin-top:14px;">Clinical placements and practical experience included Salzburg University Hospital (SALK), Salzburg Trauma Hospital (UKH), and Altm&uuml;hlfranken Hospital in Germany.</p>
+      <p style="margin-top:14px;">In addition, I have worked in private physiotherapy practices and rehabilitation facilities. This has allowed me to support people with a wide variety of conditions, backgrounds, and goals &mdash; from acute orthopaedic issues to long-term rehabilitation processes.</p>
+      <p style="margin-top:14px;">These diverse experiences have shaped my therapeutic perspective: individualised, functional, and always grounded in the realities of everyday life.</p>
+      <p style="margin-top:14px;">Alongside my clinical work, I am also involved in workplace health promotion, delivering workshops for companies on topics such as workplace ergonomics, health-supporting movement in everyday working life, and load management.</p>
+      <p style="margin-top:14px;">My focus is on providing practical strategies that can be integrated realistically and sustainably into daily routines.</p>
+    </div>
+    <div class="imp-section">
+      <p class="imp-section-title">Personal</p>
+      <p>Time is one of the most important elements of effective therapy. Too often, it becomes limited &mdash; and that is something I consciously aim to do differently. I take the time needed and structure treatments in a way that allows every patient to feel seen, understood, and genuinely heard.</p>
+      <p style="margin-top:14px;">For me, it is important not to view symptoms in isolation, but to understand together which factors may be influencing them and which steps are both meaningful and realistic over the long term. Attention, honest communication, and individual guidance are values that shape every treatment process.</p>
+      <p style="margin-top:14px;">Every person brings different experiences, circumstances, and goals. That is why I believe therapy should never follow a rigid formula. Instead, it should be adapted to the individual situation &mdash; evidence-informed, practical, and built on mutual respect.</p>
+      <p style="margin-top:14px;">Equally important is active collaboration. Sustainable change rarely comes from quick fixes. More often, it grows through shared understanding, appropriate strategies, and small steps that can be integrated into everyday life over the long term.</p>
+    </div>
+    <div class="imp-section">
+      <p class="imp-section-title">Certificates</p>
+      <p style="color:rgba(201,168,76,0.55);font-size:13px;font-weight:300;letter-spacing:0.04em;">Will be updated soon.</p>
+    </div>`,
+    // Services
+    'eyebrow-leistungen': 'What I Offer',
+    'title-leistungen':   'My <em>Services</em>',
+    'lk-more':             'More',
+    'lk-less':             'Less',
+    'lk-title-physio':    'Physiotherapy & Exercise Therapy',
+    'lk-desc-physio':     'Individually tailored therapy to improve mobility, resilience, and physical function \u2014 evidence-based, attentive, and aligned with the realities of your everyday life.',
+    'lk-title-haus':      'Home Visits',
+    'lk-desc-haus':       'Therapeutic care in your familiar environment. Especially helpful when mobility is limited, after surgery, or when travelling to the clinic would create additional stress.',
+    'lk-title-regen':     'Recovery & Health Factors',
+    'lk-desc-regen':      'Health is influenced by many factors. That is why topics such as stress regulation, sleep, load management, body awareness, and the basics of micronutrient support can also be considered when appropriate \u2014 always individually and close to everyday life.',
+    'lk-title-mi':        'Motivational Interviewing',
+    'lk-desc-mi':         'A conversation-based approach that supports lasting change. The goal is not short-term motivation, but long-term self-efficacy and a better understanding of your own body.',
+    'lk-title-bgf':       'Workplace Health Promotion',
+    'lk-desc-bgf':        'Health-promoting workshops and measures for companies and teams \u2014 covering topics such as ergonomic work, load management, and health-supporting movement in everyday working life. Practical, sustainable, and tailored to the workplace.',
+    // Pricing
+    'eyebrow-preise':     'My Fees',
+    'title-preise':       'Pricing',
+    'preis-praxis':       'Clinic',
+    'preis-haus':         'Home Visit',
+    'preis-bgf':          'Workplace Health Promotion',
+    'preis-anfrage':      'Price Upon Request',
+    'pb-title-bgf':       'Workplace Health Promotion',
+    'pb-sub-bgf':         'Workshops for Companies and Organisations',
+    'preis-disclaimer':   'Treatment is provided on a private-pay basis. Depending on your insurance provider and medical referral, you may be eligible for partial reimbursement through your health insurance.',
+    // Reviews
+    'eyebrow-testimonials': 'Patient Experiences',
+    'title-testimonials':   'Patient <em>Experiences</em>',
+    'btn-rev-write':        'Write a Review',
+    'rev-list-title':       'Previous <em>Reviews</em>',
+    'rev-eyebrow':          'Your Experience',
+    'rev-subtitle':         'Share your experience with PAN Physio. Every review is checked before publication.',
+    'btn-submit':           'Submit Review',
+    // Contact
+    'eyebrow-kontakt':    'I Look Forward to Hearing From You',
+    'title-kontakt':      'Book an <em>Appointment</em>',
+    'kontakt-tel':        'Phone',
+    'kontakt-email':      'Email',
+    'kontakt-adresse':    'Address',
+    'kontakt-oeffnung':   'Opening Hours',
+    'kontakt-tage':       'Monday \u2013 Friday',
+    'kontakt-zeit':       'By Appointment',
+    // Codebox
+    'scb-label':          'Enter Code',
+    // Footer
+    'footer-copy':        '\u00a9 2026 PAN Physio. All rights reserved.',
+    'footer-impressum':   'Legal Notice',
+    'footer-datenschutz': 'Privacy Policy',
+    // Easter Eggs
+    'egg1-label':  'Attention \u2014 Easter Egg discovered',
+    'egg1-title':  'Congratulations.',
+    'egg1-body':   `<p>You are one of the few people who take the time to truly look closely.</p>
+      <p>Maybe it was your screen size. Perhaps. But I believe something else is behind it: <em style="color:rgba(240,237,232,0.7)">Attention.</em> The ability to notice details, recognize connections, and move through life with a certain curiosity.</p>
+      <div class="egg-divider"></div>
+      <p>That is exactly what matters \u2014 here, just as much as in physiotherapy. Seeing the small things. Recognizing nuances. Becoming aware of movement, habits, and tension.</p>
+      <p>Often, the greatest changes begin with seemingly small details. A subtly adjusted movement pattern. A more conscious posture. A new perspective.</p>
+      <div class="egg-divider"></div>
+      <p>I believe true quality begins where people are willing to look more closely. With calm. With interest. With precision.</p>
+      <p>The fact that you found this little Easter Egg shows one thing for sure: you have an eye for detail.<br>And that genuinely makes me happy.</p>
+      <div class="egg-divider"></div>
+      <p>Maybe that was not all.<br>Those who remain attentive sometimes discover more than what is immediately visible.</p>`,
+    'egg2-theme':  'Curiosity',
+    'egg3-label':  'Precision & Timing — Third secret unlocked',
+    'egg3-title':  'That was truly unexpected.',
+    'egg3-body':   `<p>You completed Snake. Hardly anyone manages that.</p>
+      <p>Seriously \u2014 I built this thing and I have never beaten it myself.</p>
+      <div style="width:24px;height:1px;background:rgba(201,168,76,0.25);margin:20px 0;"></div>
+      <p>What you just showed has a name:</p>
+      <p style="color:rgba(240,237,232,0.7);font-size:15px;"><em style="color:rgba(201,168,76,0.7);font-style:italic;">Precision and Timing.</em></p>
+      <p>Every movement of the snake was a decision. Turn too early \u2014 lost. Turn too late \u2014 lost as well. Exactly the right moment, exactly the right direction.</p>
+      <p>That is not coincidence.<br>That is control.</p>
+      <div style="width:24px;height:1px;background:rgba(201,168,76,0.25);margin:20px 0;"></div>
+      <p>The same applies in physiotherapy.</p><p>Precision. Timing.</p>
+      <p>A stimulus applied too early can worsen symptoms; the wrong stimulus can even create new ones. The moment when a technique is used, and with what intensity, is individual. One step that does not match the current level of tolerance \u2014 and progress stalls.</p>
+      <p>And that is where the art of physiotherapy begins.</p>
+      <div style="width:24px;height:1px;background:rgba(201,168,76,0.25);margin:20px 0;"></div>
+      <p>So, dear Snake King, dear Snake Queen:</p>
+      <p>Keep your eyes open.</p><p>See you soon,<br>Benedikt</p>`,
+    'egg4-label':  'Memory & Connections — Second secret unlocked',
+    'egg4-title':  'You found the code.',
+    'egg4-body':   `<p>Remembering information while something new is constantly being added is harder than it first seems.</p>
+      <p>That is exactly why details fascinate me. In therapy, it is often the small hints that make the difference \u2014 a casual remark, a movement, or a pattern that only becomes visible later.</p>
+      <div class="egg4-divider"></div>
+      <p>Attention does not end with the first impression.<br>That is where it truly begins.</p>
+      <div class="egg4-divider"></div>
+      <p>You remembered the letters, even though nobody asked you to. No reminder, no note, no hint. Just attention, memory, and a little curiosity.</p>
+      <p>Interestingly, that is also part of my daily work. During a treatment session, many small pieces of information appear: movement patterns, statements, habits, goals, and observations.</p>
+      <p>Some of them end up in the documentation later. Others stay in memory at first, until they become relevant again at the next appointment.</p>
+      <div class="egg4-divider"></div>
+      <p>Good therapy is not only about recognizing movement, but also about retaining connections and being able to understand details over time.</p>
+      <p>Those who remain attentive often recognize more than what is visible at first glance.</p>
+      <p>Thank you for taking the time to look a little closer.</p>`,
+    // ── Termin-Formular ────────────────────────────────
+    'f-vorname':          'First Name',
+    'f-nachname':         'Last Name',
+    'f-email':            'Email',
+    'f-leistung-label':   'Service',
+    'f-nachricht-label':  'Your Message',
+    'f-opt-bitte':        'Please select…',
+    'f-opt-praxis':       'Physiotherapy — Clinic',
+    'f-opt-haus':         'Physiotherapy — Home Visit',
+    'f-submit':           'Send Request →',
+    'f-ph-vorname':       'Jane',
+    'f-ph-nachname':      'Smith',
+    'f-ph-email':         'your@email.com',
+    'f-ph-nachricht':     'Briefly describe your enquiry…',
+    // ── Review-Formular ────────────────────────────────
+    'rv-vorname':         'First Name *',
+    'rv-ort':             'Location',
+    'rv-bewertung':       'Rating *',
+    'rv-text-label':      'Your Review *',
+    'rv-ph-name':         'Jane',
+    'rv-ph-ort':          'Vienna',
+    'rv-ph-text':         'Share your experience with PAN Physio…',
+    // ── Tags ───────────────────────────────────────────
+    'tag-mikronährstoffe': 'Micronutrients',
+    // ── Satellite Navigation ──────────────────────────
+
+    // ── Gift Voucher ──────────────────────────────────
+    'btn-gutschein':      'Give the Gift of Health',
+    'gutschein-eyebrow':  'For you or someone who matters to you',
+    'gutschein-title':    'Give the Gift of Health',
+    'gutschein-p1':       'Some gifts are remembered longer than things. With a PAN Physio gift voucher, you give attention, care, and a contribution to greater well-being.',
+    'gutschein-p2':       'Gift vouchers can be issued for any amount of your choice and are prepared as a high-quality physical voucher card.',
+    'gutschein-how-title':'How it works',
+    'gutschein-step1':    'Select “Gift Voucher” under “Service” in the contact form.',
+    'gutschein-step2':    'Enter the desired voucher amount in your message.',
+    'gutschein-step3':    'You will then receive an invoice by email.',
+    'gutschein-step4':    'Once payment has been received, your voucher will be prepared.',
+    'gutschein-footer':   'If you have any questions, I would be happy to assist you by phone or in one of my practice locations.',
+    'f-opt-gutschein':    'Gift Voucher',
+    'f-beschwerden-label': 'Area of complaint (multiple selection possible)',
+    'chip-ruecken':   'Back',
+    'chip-nacken':    'Neck',
+    'chip-schulter':  'Shoulder',
+    'chip-knie':      'Knee',
+    'chip-huefte':    'Hip',
+    'chip-fuss':      'Foot / Ankle',
+    'chip-neuro':     'Neurological complaints',
+    'chip-postop':    'Post-operative rehabilitation',
+    'chip-sonstiges': 'Other',
+    'checklist-title':'Please bring to your appointment',
+    'leistung-eyebrow': 'Service',
+    'sat-testimonials': 'Reviews',
+    'sat-leistungen':   'Services',
+    'sat-preise':       'Pricing',
+    'sat-ueber':        'About Me',
+    'sat-kontakt':      'Contact',
+    // ── Snake Easter Egg ──────────────────────────────────
+    'snake-intro-text':    'Wow, you\'ve got a real eagle eye!<br><span style="font-size:0.88em;color:rgba(240,237,232,0.45);">Think I\'ve got more tricks up my sleeve? Take a quick break with a round of Snake.</span>',
+    'snake-title':         'Snake \u2014 second secret',
+    'snake-pause-text':    'Press Space to continue',
+    'snake-msg-start':     'Press Start or Space',
+    'snake-btn-start':     'Start',
+    'snake-btn-pause':     'Pause',
+    'snake-btn-restart':   'Restart',
+    'snake-btn-close':     'Quit',
+    'snake-hint':          '\u2190 \u2192 \u2191 \u2193 \u00a0|\u00a0 Arrow key to start',
+    'snake-gameover-prefix': 'Game Over',
+    'snake-gameover-1':    'Not bad. Give it another go.',
+    'snake-gameover-2':    'Snake is like therapy \u2014 patience pays off.',
+    'snake-gameover-3':    'Score {s}. You\'re a fast learner.',
+    'snake-gameover-4':    'Well played. Again?',
+    // ── Practices ─────────────────────────────────────────
+    'eyebrow-praxen':       'Locations',
+    'title-praxen':         'My <em>Practice Locations</em>',
+    'nav-praxen':           'Practice Locations',
+    'praxis-ansehen':       'View practice',
+    'praxis-oz-title':      'Opening hours',
+    'praxis-mo':            'Monday',
+    'praxis-di':            'Tuesday',
+    'praxis-mi':            'Wednesday',
+    'praxis-fr':            'Friday',
+    'praxis-do':            'Thursday',
+    'praxis-saso':          'Sat & Sun',
+    'praxis-vereinbarung':  'by appointment',
+    'praxis-sbg-note':      'every second Thursday',
+    'praxis-wels-region':   'Upper Austria',
+    'praxis-sbg-region':    'Salzburg',
+    'praxis-wels-desc':     'One of my practice rooms is located directly inside Anytime Fitness in Wels. The modern environment provides ideal conditions for active, hands-on therapy. In addition to physiotherapeutic treatment, movement patterns can be analysed in detail, exercises can be carried out on the spot, and the transition to independent training can be guided in the best possible way.<br><br>The therapy is aimed not only at physically active people, but at anyone who wishes to sustainably improve their mobility, resilience, and quality of life.',
+    'praxis-sbg-desc':      'My second practice location is at the 50plus Center in Salzburg. The centre is designed around the needs of older adults and provides an environment in which movement, independence, and quality of life take centre stage.<br><br>My practice room is embedded within this structure and offers physiotherapeutic care in a calm and personal atmosphere. The location is particularly suited to people who wish to maintain their mobility, move more safely in everyday life, or who are looking for targeted support following changes to their health.',
+  }
+};
+
+let currentLang = localStorage.getItem('pan-lang') || 'de';
+
+function setLang(lang){
+  if(lang === currentLang) return;
+  currentLang = lang;
+  localStorage.setItem('pan-lang', lang);
+  document.getElementById('btn-de').classList.toggle('active', lang === 'de');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  const t = TRANSLATIONS[lang];
+  if(!t) return;
+  const plainTags = new Set(['LABEL','OPTION','SPAN','DIV','P','H1','H2','H3','BUTTON','A']);
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    try {
+      const key = el.getAttribute('data-lang');
+      if(!t[key]) return;
+      if(plainTags.has(el.tagName) && !t[key].includes('<')){
+        el.textContent = t[key];
+      } else {
+        el.innerHTML = t[key];
+      }
+    } catch(e){}
+  });
+  document.querySelectorAll('span.dur').forEach(el => {
+    el.textContent = el.textContent
+      .replace(/Minuten/g, lang === 'en' ? 'minutes' : 'Minuten')
+      .replace(/minutes/g, lang === 'en' ? 'minutes' : 'Minuten');
+  });
+}
+
+// Apply saved language on load
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('pan-lang');
+  if(saved && saved !== 'de') setLang(saved);
+  else {
+    document.getElementById('btn-de').classList.add('active');
+    document.getElementById('btn-en').classList.remove('active');
+  }
+});
+
+
+// ── PORTRAIT SLIDESHOW ─────────────────────────────────
+(function(){
+  const slides = document.querySelectorAll('.portrait-slide');
+  if(!slides.length) return;
+  let current = 0;
+  setInterval(() => {
+    slides[current].classList.remove('active');
+    current = (current + 1) % slides.length;
+    slides[current].classList.add('active');
+  }, 10000);
+})();
+</script>
+</body>
+</html>
