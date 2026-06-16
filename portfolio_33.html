@@ -312,6 +312,7 @@ em { font-style:italic; }
   height:100vh;
   pointer-events:none;
   z-index:3;
+  visibility:visible;
 }
 
 /* ── CENTRAL CIRCLE ── */
@@ -846,11 +847,6 @@ em { font-style:italic; }
 
 /* Animierbarer Sweep-Winkel (CSS Custom Property) */
 /* heart CSS removed */
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-heart-glow-layer { animation: none; }
-}
 
 /* ================================================================
    WORKS SECTION
@@ -1023,6 +1019,22 @@ em { font-style:italic; }
   *, *::before, *::after { transition-duration:0.01ms !important; }
 }
 
+/* ── VIDEO EMBED ── */
+.panel__video {
+  position:relative;
+  padding-top:56.25%; /* 16:9 */
+  overflow:hidden;
+  background:#000;
+  border-radius:2px;
+  margin-bottom:1.25rem;
+}
+.panel__video iframe {
+  position:absolute;
+  top:0; left:0;
+  width:100%; height:100%;
+  border:none;
+}
+
   </style>
 </head>
 <body>
@@ -1031,7 +1043,7 @@ em { font-style:italic; }
 
   <!-- NAVIGATION — bottom bar, reference style -->
   <!-- BACK BUTTON -->
-  <a href="#" onclick="history.back();return false;" id="back-btn" title="Zurück zur PAN Physio Website">
+  <a href="index.html" onclick="if(history.length>1){history.back();return false;}" id="back-btn" title="Zurück zur PAN Physio Website">
     <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M11 4H1M1 4L4 1M1 4L4 7" stroke="currentColor" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
@@ -1042,9 +1054,7 @@ em { font-style:italic; }
     <div class="nav__inner">
       <ul class="nav__links">
         <li><a href="#hero"    class="nav__link">Home</a></li>
-        <li><a href="#hero"    class="nav__link">About</a></li>
         <li><a href="#works"   class="nav__link">Projects</a></li>
-        <li><a href="#works"   class="nav__link">What We Do</a></li>
         <li><a href="#contact" class="nav__link is-active">Contact</a></li>
 
       </ul>
@@ -1052,8 +1062,6 @@ em { font-style:italic; }
         <span class="nav__page-num is-active">01</span>
         <span class="nav__page-num">02</span>
         <span class="nav__page-num">03</span>
-        <span class="nav__page-num">04</span>
-        <span class="nav__page-num">05</span>
       </div>
     </div>
   </nav>
@@ -1314,28 +1322,49 @@ em { font-style:italic; }
         <!-- ── Videography ───────────────────────────────────────── -->
         <article class="panel panel--wide" data-category="videography">
           <div class="panel__inner">
-            <header class="panel__head"><span class="panel__tag">Videography</span><span class="panel__year">2024</span></header>
-            <h3 class="panel__title">Still / Motion</h3>
-            <p class="panel__body">A 22-minute documentary essay on the perception of stillness in athletic movement. Shot over three seasons. No narration — only texture and breath.</p>
-            <footer class="panel__foot"><span class="panel__meta">Documentary · 22 min</span><span class="panel__arrow" aria-hidden="true">↗</span></footer>
+            <header class="panel__head"><span class="panel__tag">Videography</span><span class="panel__year">2025</span></header>
+            <div class="panel__video">
+              <iframe
+                src="https://player.vimeo.com/video/1201612876?title=0&byline=0&portrait=0&color=b8a88a"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowfullscreen
+                title="Performance">
+              </iframe>
+            </div>
+            <h3 class="panel__title">Performance</h3>
+            <footer class="panel__foot"><span class="panel__meta">Videography · 2025</span><span class="panel__arrow" aria-hidden="true">↗</span></footer>
           </div>
         </article>
 
-        <article class="panel" data-category="videography">
+        <article class="panel panel--wide" data-category="videography">
           <div class="panel__inner">
-            <header class="panel__head"><span class="panel__tag">Videography</span><span class="panel__year">2023</span></header>
-            <h3 class="panel__title">Threshold</h3>
-            <p class="panel__body">Short film on the border between effort and surrender. Filmed during a ten-day residency in Iceland. Raw, minimal, unscripted.</p>
-            <footer class="panel__foot"><span class="panel__meta">Short Film · 9 min</span><span class="panel__arrow" aria-hidden="true">↗</span></footer>
+            <header class="panel__head"><span class="panel__tag">Videography</span><span class="panel__year">2025</span></header>
+            <div class="panel__video">
+              <iframe
+                src="https://player.vimeo.com/video/1201612876?title=0&byline=0&portrait=0&color=b8a88a"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowfullscreen
+                title="Treatment Session">
+              </iframe>
+            </div>
+            <h3 class="panel__title">Treatment Session</h3>
+            <footer class="panel__foot"><span class="panel__meta">Videography · 2025</span><span class="panel__arrow" aria-hidden="true">↗</span></footer>
           </div>
         </article>
 
-        <article class="panel" data-category="videography">
+        <article class="panel panel--wide" data-category="videography">
           <div class="panel__inner">
-            <header class="panel__head"><span class="panel__tag">Videography</span><span class="panel__year">2022</span></header>
-            <h3 class="panel__title">Body as Archive</h3>
-            <p class="panel__body">A visual study of physical endurance as memory. Long-form movement sequences edited to ambient score. Selected for private screening.</p>
-            <footer class="panel__foot"><span class="panel__meta">Experimental · 34 min</span><span class="panel__arrow" aria-hidden="true">↗</span></footer>
+            <header class="panel__head"><span class="panel__tag">Videography</span><span class="panel__year">2025</span></header>
+            <div class="panel__video">
+              <iframe
+                src="https://player.vimeo.com/video/1201612876?title=0&byline=0&portrait=0&color=b8a88a"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowfullscreen
+                title="Behind the Scenes">
+              </iframe>
+            </div>
+            <h3 class="panel__title">Behind the Scenes</h3>
+            <footer class="panel__foot"><span class="panel__meta">Videography · 2025</span><span class="panel__arrow" aria-hidden="true">↗</span></footer>
           </div>
         </article>
 
@@ -1435,7 +1464,7 @@ em { font-style:italic; }
         This archive is private.<br />
         <em>Access and collaboration by invitation.</em>
       </p>
-      <a class="contact__link" href="mailto:hello@example.com">hello@example.com</a>
+      <a class="contact__link" href="mailto:benedikt@pan-physio.com">benedikt@pan-physio.com</a>
       <div class="contact__rule" aria-hidden="true"></div>
       <p class="contact__copy">© 2010–2025 &nbsp;·&nbsp; All work retained by the author</p>
     </div>
@@ -1482,6 +1511,19 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
+/* Radar: nur während Hero sichtbar */
+(function () {
+  var radarWrap = document.getElementById('radarWrap');
+  var heroSection = document.getElementById('hero');
+  if (!radarWrap || !heroSection) return;
+  function syncRadar() {
+    radarWrap.style.visibility = heroSection.getBoundingClientRect().bottom > 0 ? '' : 'hidden';
+  }
+  syncRadar();
+  window.addEventListener('scroll', syncRadar, { passive:true });
+  window.addEventListener('resize', syncRadar, { passive:true });
+})();
+
 /* Panel reveal via IntersectionObserver */
 panels.forEach((p, i) => { p.style.transitionDelay = i * 55 + 'ms'; });
 
@@ -1496,9 +1538,8 @@ const observer = new IntersectionObserver(entries => {
 
 panels.forEach(p => observer.observe(p));
   </script>
-</body>
-</html>
-<script>
+
+  <script>
 /* ── IRONMAN HUD LOGIC ── */
 (function(){
 
@@ -1726,4 +1767,6 @@ panels.forEach(p => observer.observe(p));
 /* heart glow removed — replaced by CSS radar-scan effect */
 
 
-</script>
+  </script>
+</body>
+</html>
