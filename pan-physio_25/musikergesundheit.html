@@ -128,6 +128,16 @@ section{padding:100px 0;}
 .musiker-content{max-width:700px;margin:0 auto;}
 .musiker-section{margin-bottom:50px;}
 .musiker-subhead{font-family:'Playfair Display',serif;font-size:clamp(19px,2.2vw,25px);font-weight:400;margin-bottom:16px;color:var(--white);}
+/* Cinematic */
+#musiker-cinematic{padding:0;position:relative;}
+.musiker-cin-wrap{position:relative;height:90vh;min-height:520px;overflow:hidden;}
+.musiker-cin-wrap img{position:absolute;top:-15%;left:0;width:100%;height:130%;object-fit:cover;object-position:center 70%;display:block;filter:grayscale(100%) brightness(0.78);transition:filter 1.5s ease;will-change:transform;}
+.musiker-cin-wrap img.cin-revealed{filter:grayscale(0%) sepia(18%) brightness(0.78);}
+.musiker-cin-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,var(--bg) 0%,rgba(5,8,16,0.82) 14%,rgba(5,8,16,0.44) 42%,transparent 66%);pointer-events:none;}
+.musiker-cin-text{position:absolute;top:0;left:0;right:0;padding-top:52px;}
+.musiker-cin-text .musiker-subhead{color:var(--white);}
+#musiker-cta-sec{background:var(--bg);padding-top:52px;}
+@media(max-width:700px){.musiker-cin-wrap{height:75vw;min-height:300px;}.musiker-cin-text{padding-bottom:32px;}}
 /* Footer */
 footer{padding:36px 48px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;background:#030508;}
 @media(max-width:600px){footer{padding:28px 20px;flex-direction:column;align-items:flex-start;}}
@@ -223,17 +233,35 @@ footer{padding:36px 48px;border-top:1px solid var(--border);display:flex;align-i
         <p data-lang="musiker-p4">Da ich selbst aktiv musiziere, kenne ich viele der körperlichen und mentalen Anforderungen des musikalischen Alltags aus eigener Erfahrung. Ich habe ein besonderes Gespür für präzise und filigrane Bewegungsabläufe und kann therapeutische Zusammenhänge daher auch aus der Perspektive eines*einer Musiker*in betrachten.</p>
       </div>
 
-      <div class="reveal musiker-section ueber-body" style="margin-bottom:0;">
-        <h2 class="musiker-subhead" data-lang="musiker-h-therapie">Untersuchung &amp; Behandlungsansatz</h2>
-        <p data-lang="musiker-p5">In der Therapie untersuche ich nicht nur die schmerzende Stelle, sondern das gesamte Bewegungsmuster beim Musizieren – wenn möglich direkt mit dem eigenen Instrument. So können Zusammenhänge sichtbar werden, die bei einer rein lokalen Betrachtung häufig verborgen bleiben.</p>
-        <p data-lang="musiker-p6">Auf dieser Grundlage entsteht ein individuell abgestimmter Behandlungsplan. Ziel ist nicht nur die Schmerzfreiheit, sondern ein nachhaltiger und beschwerdefreier Weg zurück zum Instrument. Ergänzend erarbeiten wir hilfreiche Strategien zum Aufwärmen, Regenerieren und Vorbeugen, die sich realistisch in den persönlichen musikalischen Alltag integrieren lassen.</p>
-      </div>
+    </div>
+  </div>
+</section>
 
-      <div class="reveal" style="margin-top:56px;padding-top:48px;border-top:1px solid var(--border);text-align:center;">
+<section id="musiker-cinematic">
+  <div class="musiker-cin-wrap">
+    <img src="../Bilder/DSC05722.jpg" alt="Benedikt Panić – Physiotherapeut und Musiker" loading="lazy">
+    <div class="musiker-cin-overlay" aria-hidden="true"></div>
+    <div class="musiker-cin-text">
+      <div class="section-inner">
+        <div class="musiker-content reveal">
+          <h2 class="musiker-subhead" data-lang="musiker-h-therapie">Untersuchung &amp; Behandlungsansatz</h2>
+          <div class="ueber-body">
+            <p data-lang="musiker-p5">In der Therapie untersuche ich nicht nur die schmerzende Stelle, sondern das gesamte Bewegungsmuster beim Musizieren – wenn möglich direkt mit dem eigenen Instrument. So können Zusammenhänge sichtbar werden, die bei einer rein lokalen Betrachtung häufig verborgen bleiben.</p>
+            <p data-lang="musiker-p6">Auf dieser Grundlage entsteht ein individuell abgestimmter Behandlungsplan. Ziel ist nicht nur die Schmerzfreiheit, sondern ein nachhaltiger und beschwerdefreier Weg zurück zum Instrument. Ergänzend erarbeiten wir hilfreiche Strategien zum Aufwärmen, Regenerieren und Vorbeugen, die sich realistisch in den persönlichen musikalischen Alltag integrieren lassen.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="musiker-cta-sec">
+  <div class="section-inner">
+    <div class="musiker-content">
+      <div class="reveal" style="padding-top:48px;border-top:1px solid var(--border);text-align:center;">
         <p style="margin-bottom:20px;font-size:15px;color:rgba(240,237,232,0.72);" data-lang="musiker-cta">Wenn Sie Beschwerden im Zusammenhang mit Ihrem Instrument verspüren oder vorbeugend aktiv werden möchten, freue ich mich auf Ihre Anfrage.</p>
         <a class="nav-cta" style="display:inline-block;text-decoration:none;" href="../index.html#kontakt" data-lang="nav-cta">Termin buchen</a>
       </div>
-
     </div>
   </div>
 </section>
@@ -356,6 +384,33 @@ function setLang(lang){
     } catch(e){}
   });
 }
+
+// Cinematic: Grayscale-Reveal + Parallax
+(function(){
+  const wrap = document.querySelector('.musiker-cin-wrap');
+  const img  = wrap ? wrap.querySelector('img') : null;
+  if(!wrap || !img) return;
+
+  // Grayscale → Farbe beim Einscollen
+  const observer = new IntersectionObserver(entries => {
+    if(entries[0].isIntersecting){
+      img.classList.add('cin-revealed');
+      observer.unobserve(wrap);
+    }
+  }, {threshold: 0.18});
+  observer.observe(wrap);
+
+  // Parallax: Bild bewegt sich mit 18 % der Scroll-Geschwindigkeit relativ zur Viewport-Mitte
+  function parallax(){
+    const rect   = wrap.getBoundingClientRect();
+    const vh     = window.innerHeight;
+    if(rect.bottom < 0 || rect.top > vh) return;
+    const offset = (rect.top + rect.height / 2 - vh / 2) * 0.18;
+    img.style.transform = 'translateY(' + offset.toFixed(2) + 'px)';
+  }
+  window.addEventListener('scroll', parallax, {passive:true});
+  parallax();
+})();
 
 // Apply saved language on load
 document.addEventListener('DOMContentLoaded', () => {
