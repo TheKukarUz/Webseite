@@ -297,11 +297,35 @@ em { font-style:italic; }
   }
 }
 
-/* ── STICKY OVERLAY ── */
+/* ── STICKY OVERLAY (nur Radar + Crosshair + Scanline) ── */
 .hero__sticky {
   position:sticky; top:0; height:100vh;
   z-index:6; overflow:hidden; pointer-events:none;
 }
+
+/* ── SCROLL HUD — scrollt mit der Seite mit ── */
+.hero__scroll-hud {
+  position:absolute; top:0; left:0; right:0; height:100vh;
+  z-index:5; overflow:hidden; pointer-events:none;
+}
+
+/* ── WHICH DIRECTION LOGO SVG — Zündschnur-Punkt wandert Umrisse ab ── */
+.hero__wd-logo {
+  position:absolute;
+  top:16%; left:11%;
+  width:clamp(90px, 11vw, 165px);
+  height:auto;
+  pointer-events:none; user-select:none;
+  opacity:0;
+  animation:wdLogoAppear 14s ease-in-out infinite 1.5s;
+}
+@keyframes wdLogoAppear {
+  0%,100% { opacity:0; }
+  5%      { opacity:1; }
+  72%     { opacity:1; }
+  88%     { opacity:0; }
+}
+@media(max-width:767px){ .hero__wd-logo { display:none; } }
 
 /* ── RADAR FIXED WRAPPER ── */
 /* Radar + Kreise: sticky wie hero__sticky — bleibt beim Scrollen stehen */
@@ -428,30 +452,146 @@ em { font-style:italic; }
 
 /* ── POSITIONS ── */
 .hud--tl {
-  top:calc(var(--nav-h) + 3.5rem); left:var(--gutter);
+  top:calc(var(--nav-h) + 5rem); left:calc(var(--gutter) + 1.5rem);
   width:130px;
 }
 .hud--tr {
-  top:calc(var(--nav-h) + 3.5rem); right:var(--gutter);
+  top:calc(var(--nav-h) + 5rem); right:calc(var(--gutter) + 1.5rem);
   text-align:right; width:140px;
 }
 .hud--ml {
-  top:50%; left:var(--gutter);
+  top:42%; left:calc(var(--gutter) + 2rem);
   transform:translateY(-50%);
   width:120px;
 }
 .hud--mr {
-  top:50%; right:var(--gutter);
+  top:38%; right:calc(var(--gutter) + 2rem);
   transform:translateY(-50%);
   text-align:right; width:130px;
 }
 .hud--bl {
-  bottom:calc(var(--nav-h) + 3.5rem); left:var(--gutter);
+  bottom:calc(var(--nav-h) + 5.5rem); left:calc(var(--gutter) + 1.5rem);
   width:140px;
 }
 .hud--br {
-  bottom:calc(var(--nav-h) + 3.5rem); right:var(--gutter);
+  bottom:calc(var(--nav-h) + 5.5rem); right:calc(var(--gutter) + 1.5rem);
   text-align:right; width:130px;
+}
+
+/* ── TRAJECTORY DIAGRAMS ── */
+.hero__traj {
+  position:absolute; pointer-events:none; user-select:none;
+  opacity:0.85;
+}
+.hero__traj--arc {
+  left:calc(var(--gutter) + 1.5rem); top:58%;
+  width:220px;
+}
+.hero__traj--polar {
+  right:calc(var(--gutter) + 14rem); bottom:calc(var(--nav-h) + 4rem);
+  width:190px;
+}
+.hero__traj text {
+  font-family:var(--font-hero);
+}
+/* arc dot: moves along parabolic path */
+.traj-arc-dot {
+  offset-path:path('M 10 72 Q 85 4 160 72');
+  offset-distance:0%;
+  animation:trajArcMove 6s ease-in-out infinite alternate;
+}
+@keyframes trajArcMove {
+  from { offset-distance:0%; }
+  to   { offset-distance:100%; }
+}
+/* polar: orbiting dot group */
+.traj-polar-orbit {
+  transform-origin:70px 68px;
+  animation:polarOrbit 9s linear infinite;
+}
+@keyframes polarOrbit {
+  from { transform:rotate(0deg); }
+  to   { transform:rotate(360deg); }
+}
+
+/* ── LEFT INSTAGRAM LINK (dezent, bestehend) ── */
+.hero__insta--left {
+  right:auto; left:3.5rem;
+  align-items:flex-start;
+}
+.hero__insta--left .hero__insta-tag { text-align:left; }
+.hero__insta--left .hero__insta-bar {
+  background:linear-gradient(90deg, rgba(184,168,138,0.4), transparent);
+}
+
+/* ── CYBERTRON INSTAGRAM BUTTON — links, mittig ── */
+.hero__cyb-insta {
+  position:absolute;
+  left:calc(var(--gutter) + 1.5rem);
+  top:52%;
+  transform:translateY(-50%);
+  z-index:10; pointer-events:auto;
+  text-decoration:none;
+  display:inline-flex; align-items:center; gap:0.6rem;
+  padding:0.55rem 1.1rem 0.55rem 0.9rem;
+  /* angeschnittene Ecke oben-rechts */
+  clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+  border:1px solid rgba(184,168,138,0.35);
+  background:rgba(8,8,8,0.7);
+  opacity:0.55;
+  transition:opacity 0.3s, border-color 0.3s, background 0.3s;
+  animation:cybInstaFloat 9s ease-in-out infinite;
+}
+.hero__cyb-insta:hover {
+  opacity:1;
+  border-color:var(--accent);
+  background:rgba(184,168,138,0.08);
+  animation-play-state:paused;
+}
+/* Icon-Kästchen links */
+.hero__cyb-insta__icon {
+  width:22px; height:22px; flex-shrink:0;
+  border:1px solid rgba(184,168,138,0.5);
+  display:flex; align-items:center; justify-content:center;
+  clip-path:polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 0 100%);
+}
+.hero__cyb-insta__icon svg { width:11px; height:11px; }
+/* Text-Stack */
+.hero__cyb-insta__text {
+  display:flex; flex-direction:column; gap:0.15rem;
+}
+.hero__cyb-insta__label {
+  font-family:var(--font-hero);
+  font-size:0.38rem; letter-spacing:0.3em; text-transform:uppercase;
+  color:rgba(184,168,138,0.55);
+}
+.hero__cyb-insta__handle {
+  font-family:var(--font-hero);
+  font-size:0.7rem; letter-spacing:0.08em;
+  color:var(--accent);
+  position:relative;
+  animation:instaGlitch 13s steps(1) infinite 4s;
+}
+.hero__cyb-insta__handle::before,
+.hero__cyb-insta__handle::after {
+  content:'@benni_pan';
+  position:absolute; top:0; left:0; width:100%; pointer-events:none; opacity:0;
+}
+.hero__cyb-insta__handle::before { color:rgba(0,220,255,0.8); animation:instaGhostA 13s steps(1) infinite 4s; }
+.hero__cyb-insta__handle::after  { color:rgba(255,30,100,0.7);  animation:instaGhostB 13s steps(1) infinite 4s; }
+/* Akzent-Linie unten */
+.hero__cyb-insta__line {
+  position:absolute; bottom:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg, var(--accent), transparent);
+  opacity:0.4;
+}
+@keyframes cybInstaFloat {
+  0%,100% { transform:translateY(-50%); }
+  50%      { transform:translateY(calc(-50% - 5px)); }
+}
+
+@media(max-width:767px){
+  .hero__traj,.hero__insta--left,.hero__cyb-insta { display:none; }
 }
 
 /* ── PAN description — right side at face level ── */
@@ -885,11 +1025,11 @@ em { font-style:italic; }
   border-bottom:1px solid var(--glass-border);
 }
 .filter-tab {
-  font-family:var(--font-ui); font-size:0.5625rem; font-weight:600;
+  font-family:var(--font-ui); font-size:0.72rem; font-weight:600;
   letter-spacing:0.18em; text-transform:uppercase;
   color:var(--text-secondary); background:transparent;
   border:1px solid transparent; border-radius:2px;
-  padding:0.45em 1.1em; cursor:pointer;
+  padding:0.55em 1.3em; cursor:pointer;
   transition:color 180ms, border-color 180ms, background 180ms;
 }
 .filter-tab:hover { color:var(--text-primary); border-color:var(--glass-border); }
@@ -917,16 +1057,13 @@ em { font-style:italic; }
 @media (min-width:640px) {
   .video-block {
     display:grid;
-    grid-template-columns:1fr 1fr;
-    grid-template-rows:auto auto;
+    grid-template-columns:repeat(3,1fr);
     gap:1px;
     background:var(--glass-border);
-    grid-column:1 / -1; /* span full width of parent grid */
+    grid-column:1 / -1;
   }
-  .panel--video-left  { grid-column:1; }
-  .panel--video-right { grid-column:2; grid-row:1 / 3; align-self:stretch; }
-  .panel--video-right .panel__inner { height:100%; }
-  .panel--video-right .panel__video-flex { flex:1; }
+  .panel--video-wide      { grid-column:1 / -1; }
+  .panel--video-landscape { grid-column:span 2; }
 }
 .panel {
   background:var(--glass-bg);
@@ -953,22 +1090,22 @@ em { font-style:italic; }
 }
 .panel__head { display:flex; justify-content:space-between; align-items:center; }
 .panel__tag {
-  font-family:var(--font-ui); font-size:0.5625rem; font-weight:600;
+  font-family:var(--font-ui); font-size:0.7rem; font-weight:600;
   letter-spacing:0.2em; text-transform:uppercase; color:var(--accent);
 }
 .panel__year {
-  font-family:var(--font-ui); font-size:0.5625rem; font-weight:400;
+  font-family:var(--font-ui); font-size:0.7rem; font-weight:400;
   letter-spacing:0.1em; color:var(--text-tertiary);
 }
 .panel__title {
   font-family:var(--font-display); font-weight:400;
-  font-size:clamp(1.5rem,3vw,2.1rem); line-height:1.1;
+  font-size:clamp(1.75rem,3.5vw,2.5rem); line-height:1.1;
   letter-spacing:-0.01em; color:var(--text-primary);
   transition:color 180ms;
 }
 .panel:hover .panel__title { color:#f0ebe3; }
 .panel__body {
-  font-family:var(--font-display); font-size:1rem; font-weight:300;
+  font-family:var(--font-display); font-size:1.1rem; font-weight:300;
   line-height:1.75; color:var(--text-secondary); flex-grow:1;
 }
 .panel__foot {
@@ -977,7 +1114,7 @@ em { font-style:italic; }
   border-top:1px solid var(--glass-border);
 }
 .panel__meta {
-  font-family:var(--font-ui); font-size:0.5625rem; font-weight:500;
+  font-family:var(--font-ui); font-size:0.7rem; font-weight:500;
   letter-spacing:0.15em; text-transform:uppercase; color:var(--text-tertiary);
 }
 .panel__arrow {
@@ -1269,6 +1406,156 @@ em { font-style:italic; }
   #intro { display:none !important; }
 }
 
+/* ── PORTRAIT VIDEO ── */
+.panel__video-portrait {
+  position:relative; background:#000; border-radius:2px;
+  margin-bottom:1.25rem; overflow:hidden;
+  aspect-ratio:9/16; width:100%;
+}
+.panel__video-portrait iframe {
+  position:absolute; top:0; left:0; width:100%; height:100%; border:none;
+}
+
+/* ── LANDSCAPE VIDEO ── */
+.panel__video-landscape-wrap {
+  position:relative; background:#000; border-radius:2px;
+  margin-bottom:1.25rem; overflow:hidden;
+  aspect-ratio:16/9; width:100%;
+}
+.panel__video-landscape-wrap iframe {
+  position:absolute; top:0; left:0; width:100%; height:100%; border:none;
+}
+
+/* ── HERO INSTAGRAM LINK ── */
+.hero__insta {
+  position:absolute;
+  bottom:2.2rem; right:2.5rem;
+  z-index:10; pointer-events:auto;
+  text-decoration:none;
+  display:flex; flex-direction:column; align-items:flex-end; gap:0.18rem;
+  opacity:0.42;
+  transition:opacity 0.35s;
+  animation:instaFloat 7s ease-in-out infinite;
+}
+.hero__insta:hover { opacity:1; animation-play-state:paused; }
+
+.hero__insta-tag {
+  font-family:var(--font-hero);
+  font-size:0.42rem; letter-spacing:0.28em;
+  color:rgba(184,168,138,0.7); text-transform:uppercase;
+}
+.hero__insta-handle {
+  font-family:var(--font-hero);
+  font-size:0.72rem; letter-spacing:0.1em;
+  color:var(--accent);
+  position:relative;
+  animation:instaGlitch 11s steps(1) infinite;
+}
+.hero__insta-handle::before,
+.hero__insta-handle::after {
+  content:'@benni_pan';
+  position:absolute; top:0; left:0;
+  width:100%; pointer-events:none; opacity:0;
+}
+.hero__insta-handle::before {
+  color:rgba(0,220,255,0.8);
+  animation:instaGhostA 11s steps(1) infinite;
+}
+.hero__insta-handle::after {
+  color:rgba(255,30,100,0.7);
+  animation:instaGhostB 11s steps(1) infinite;
+}
+.hero__insta-bar {
+  width:100%; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(184,168,138,0.35));
+  margin-top:0.1rem;
+}
+
+@keyframes instaFloat {
+  0%,100% { transform:translateY(0); }
+  50%      { transform:translateY(-6px); }
+}
+@keyframes instaGlitch {
+  0%,80%,100% { transform:none; }
+  81% { transform:translateX(-3px) skewX(-2deg); }
+  82% { transform:translateX(2px); }
+  83% { transform:none; }
+  93% { transform:translateX(-2px); }
+  94% { transform:none; }
+}
+@keyframes instaGhostA {
+  0%,80%,100% { opacity:0; transform:none; clip-path:none; }
+  81% { opacity:0.85; transform:translateX(-6px); clip-path:polygon(0 10%,100% 10%,100% 45%,0 45%); }
+  82% { opacity:0; }
+  83% { opacity:0.6; transform:translateX(4px); clip-path:polygon(0 60%,100% 60%,100% 90%,0 90%); }
+  84% { opacity:0; }
+}
+@keyframes instaGhostB {
+  0%,81%,100% { opacity:0; transform:none; clip-path:none; }
+  82% { opacity:0.75; transform:translateX(7px); clip-path:polygon(0 30%,100% 30%,100% 65%,0 65%); }
+  83% { opacity:0; }
+  93% { opacity:0.5; transform:translateX(-4px); clip-path:polygon(0 5%,100% 5%,100% 35%,0 35%); }
+  94% { opacity:0; }
+}
+
+/* ── TEASER TEXT MIT CLAMP ── */
+.panel__body--fade {
+  display:-webkit-box;
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  margin-bottom:0.6rem;
+}
+.panel__read-more {
+  display:inline-block;
+  font-family:var(--font-ui);
+  font-size:0.8rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--accent);
+  opacity:0.6;
+  margin-bottom:1.25rem;
+}
+
+/* ── WHICH DIRECTION THUMBNAILS ── */
+.wd-thumb-row {
+  display:flex; flex-wrap:wrap;
+  gap:0.75rem; align-items:flex-start;
+  margin-bottom:1.75rem;
+}
+.wd-thumb {
+  position:relative; display:block;
+  overflow:hidden; border-radius:2px;
+  background:#111; text-decoration:none;
+  flex:0 0 auto;
+}
+.wd-thumb--portrait  { width:90px;  aspect-ratio:9/16; }
+.wd-thumb--landscape { width:160px; aspect-ratio:16/9; align-self:center; }
+.wd-thumb img {
+  width:100%; height:100%; object-fit:cover;
+  display:block; transition:transform 0.4s var(--ease-out);
+}
+.wd-thumb:hover img { transform:scale(1.06); }
+.wd-thumb__overlay {
+  position:absolute; inset:0;
+  background:rgba(0,0,0,0.45);
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:0.35rem;
+  opacity:0; transition:opacity 0.25s;
+}
+.wd-thumb:hover .wd-thumb__overlay { opacity:1; }
+.wd-thumb__play {
+  width:1.6rem; height:1.6rem;
+  border:1.5px solid var(--accent); border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--accent); font-size:0.55rem; padding-left:2px;
+}
+.wd-thumb__label {
+  font-family:var(--font-ui); font-size:0.55rem;
+  letter-spacing:0.1em; text-transform:uppercase;
+  color:#fff; text-align:center; padding:0 0.25rem;
+}
+
 /* ── DETAIL OVERLAY ── */
 .panel__detail-btn {
   background:transparent; border:none; cursor:pointer;
@@ -1329,28 +1616,28 @@ em { font-style:italic; }
 }
 .lyrics-overlay__close {
   position:fixed; top:1.5rem; right:1.5rem;
-  font-family:var(--font-ui); font-size:0.6rem; letter-spacing:0.2em;
+  font-family:var(--font-ui); font-size:0.75rem; letter-spacing:0.2em;
   text-transform:uppercase; color:var(--text-tertiary);
   background:transparent; border:1px solid var(--glass-border);
-  padding:0.4rem 0.9rem; cursor:pointer; border-radius:2px;
+  padding:0.55rem 1.2rem; cursor:pointer; border-radius:2px;
   transition:color 0.2s, border-color 0.2s;
 }
 .lyrics-overlay__close:hover { color:var(--text-primary); border-color:var(--text-primary); }
 .lyrics-overlay__title {
-  font-family:var(--font-display); font-size:clamp(1.8rem,5vw,3rem);
+  font-family:var(--font-display); font-size:clamp(2rem,5.5vw,3.4rem);
   color:var(--text-primary); margin-bottom:0.5rem; font-weight:400;
 }
 .lyrics-overlay__meta {
-  font-family:var(--font-ui); font-size:0.55rem; letter-spacing:0.2em;
+  font-family:var(--font-ui); font-size:0.7rem; letter-spacing:0.2em;
   text-transform:uppercase; color:var(--accent); margin-bottom:2.5rem;
 }
 .lyrics-section-label {
-  font-family:var(--font-ui); font-size:0.5rem; letter-spacing:0.22em;
+  font-family:var(--font-ui); font-size:0.65rem; letter-spacing:0.22em;
   text-transform:uppercase; color:var(--text-tertiary);
   margin:2rem 0 0.75rem; display:block;
 }
 .lyrics-line {
-  font-family:var(--font-display); font-size:clamp(0.95rem,2.5vw,1.2rem);
+  font-family:var(--font-display); font-size:clamp(1.1rem,3vw,1.45rem);
   color:rgba(255,255,255,0.25); line-height:1.7;
   transition:color 0.3s, text-shadow 0.3s;
   cursor:default; display:block; margin-bottom:0.15rem;
@@ -1370,6 +1657,19 @@ em { font-style:italic; }
   height:100%; width:0%; background:var(--accent);
   border-radius:1px; transition:width 0.25s linear;
 }
+.lyrics-overlay__transport {
+  display:flex; align-items:center; gap:0.9rem; margin-bottom:2rem;
+}
+.lyrics-overlay__playbtn {
+  flex-shrink:0; width:34px; height:34px; border-radius:50%;
+  border:1px solid var(--accent); background:transparent;
+  color:var(--accent); cursor:pointer; display:flex;
+  align-items:center; justify-content:center;
+  transition:background 0.2s, color 0.2s;
+}
+.lyrics-overlay__playbtn:hover { background:var(--accent); color:#000; }
+.lyrics-overlay__playbtn svg { width:13px; height:13px; }
+.lyrics-overlay__transport .lyrics-overlay__progress { margin-bottom:0; flex:1; }
 
 /* ================================================================
    RESPONSIVE
@@ -1377,14 +1677,17 @@ em { font-style:italic; }
 @media (min-width:640px) {
   .panel-grid { grid-template-columns:repeat(2,1fr); }
   .panel--wide { grid-column:span 2; }
+  .panel--full { grid-column:1 / -1; }
 }
 @media (min-width:1024px) {
   .panel-grid { grid-template-columns:repeat(3,1fr); }
   .panel--wide { grid-column:span 2; }
+  .panel--full { grid-column:1 / -1; }
 }
 @media (min-width:1400px) {
   .panel-grid { grid-template-columns:repeat(4,1fr); }
   .panel--wide { grid-column:span 2; }
+  .panel--full { grid-column:1 / -1; }
 }
 @media (prefers-reduced-motion:reduce) {
   .hero__circle, .hero__radar, .hero__circle-inner, .hero__scan { animation:none; }
@@ -1863,6 +2166,181 @@ em { font-style:italic; }
       ─────────────────────────────────────────────────────────────── -->
       <!-- heart removed -->
 
+      <!-- Trajectory Arc — left side, between ml and bl -->
+      <svg class="hero__traj hero__traj--arc" viewBox="0 0 170 88" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- axis -->
+        <line x1="10" y1="78" x2="163" y2="78" stroke="rgba(255,255,255,0.1)" stroke-width="0.6"/>
+        <line x1="10" y1="78" x2="10" y2="10" stroke="rgba(255,255,255,0.1)" stroke-width="0.6"/>
+        <!-- vertical tick marks on x-axis -->
+        <line x1="52"  y1="78" x2="52"  y2="82" stroke="rgba(255,255,255,0.18)" stroke-width="0.5"/>
+        <line x1="95"  y1="78" x2="95"  y2="82" stroke="rgba(255,255,255,0.18)" stroke-width="0.5"/>
+        <line x1="138" y1="78" x2="138" y2="82" stroke="rgba(255,255,255,0.18)" stroke-width="0.5"/>
+        <!-- horizontal ticks on y-axis -->
+        <line x1="7" y1="55" x2="10" y2="55" stroke="rgba(255,255,255,0.18)" stroke-width="0.5"/>
+        <line x1="7" y1="32" x2="10" y2="32" stroke="rgba(255,255,255,0.18)" stroke-width="0.5"/>
+        <!-- trajectory arc -->
+        <path d="M 10 72 Q 85 4 160 72" stroke="rgba(184,168,138,0.5)" stroke-width="1.1" fill="none" stroke-dasharray="3.5 2.5"/>
+        <!-- marker dots along arc -->
+        <circle cx="10"  cy="72" r="2"   fill="rgba(184,168,138,0.5)"/>
+        <circle cx="46"  cy="31" r="1.5" fill="rgba(184,168,138,0.35)"/>
+        <circle cx="85"  cy="4"  r="2.2" fill="none" stroke="rgba(184,168,138,0.55)" stroke-width="0.8"/>
+        <circle cx="124" cy="31" r="1.5" fill="rgba(184,168,138,0.35)"/>
+        <circle cx="160" cy="72" r="2"   fill="none" stroke="rgba(255,30,100,0.6)" stroke-width="0.9"/>
+        <!-- velocity vectors (cyan arrows) -->
+        <line x1="10" y1="72" x2="21" y2="57" stroke="rgba(0,220,255,0.45)" stroke-width="0.8"/>
+        <polygon points="21,57 17,63 24,61" fill="rgba(0,220,255,0.45)"/>
+        <line x1="46" y1="31" x2="59" y2="28" stroke="rgba(0,220,255,0.35)" stroke-width="0.7"/>
+        <polygon points="59,28 55,32 60,34" fill="rgba(0,220,255,0.35)"/>
+        <line x1="124" y1="31" x2="136" y2="39" stroke="rgba(0,220,255,0.35)" stroke-width="0.7"/>
+        <polygon points="136,39 131,36 133,42" fill="rgba(0,220,255,0.35)"/>
+        <!-- apex label -->
+        <line x1="85" y1="4" x2="100" y2="4" stroke="rgba(184,168,138,0.25)" stroke-width="0.5"/>
+        <text x="102" y="7" font-size="5.5" fill="rgba(184,168,138,0.55)" font-family="'Chakra Petch',monospace" letter-spacing="0.05em">APEX</text>
+        <!-- range indicator -->
+        <line x1="10" y1="84" x2="160" y2="84" stroke="rgba(184,168,138,0.18)" stroke-width="0.5" stroke-dasharray="2 2"/>
+        <text x="85" y="88" text-anchor="middle" font-size="5" fill="rgba(255,255,255,0.3)" font-family="'Chakra Petch',monospace" letter-spacing="0.06em">Δx = 150 m</text>
+        <!-- title + v0 -->
+        <text x="12" y="9" font-size="5.5" fill="rgba(184,168,138,0.6)" font-family="'Chakra Petch',monospace" letter-spacing="0.12em">TRAJ.SYS</text>
+        <text x="15" y="62" font-size="5" fill="rgba(0,220,255,0.55)" font-family="'Chakra Petch',monospace">V₀=12.4 m/s</text>
+        <text x="152" y="70" font-size="5" fill="rgba(255,30,100,0.55)" font-family="'Chakra Petch',monospace">Tx</text>
+        <!-- animated dot moving along arc -->
+        <circle class="traj-arc-dot" r="2.2" cx="0" cy="0" fill="rgba(184,168,138,0.9)"/>
+      </svg>
+
+      <!-- Polar Azimuth Tracker — bottom-right -->
+      <svg class="hero__traj hero__traj--polar" viewBox="0 0 140 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- title -->
+        <text x="4" y="9" font-size="5.5" fill="rgba(184,168,138,0.6)" font-family="'Chakra Petch',monospace" letter-spacing="0.12em">AZI.TRACK</text>
+        <!-- range rings -->
+        <circle cx="70" cy="68" r="18" stroke="rgba(255,255,255,0.07)" stroke-width="0.6" fill="none" stroke-dasharray="2 3"/>
+        <circle cx="70" cy="68" r="34" stroke="rgba(255,255,255,0.07)" stroke-width="0.6" fill="none" stroke-dasharray="2 3"/>
+        <circle cx="70" cy="68" r="50" stroke="rgba(184,168,138,0.13)" stroke-width="0.7" fill="none" stroke-dasharray="3 4"/>
+        <!-- cross-hairs (faint) -->
+        <line x1="70" y1="16" x2="70" y2="120" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+        <line x1="18" y1="68" x2="122" y2="68" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+        <!-- 45° diagonals -->
+        <line x1="33.6" y1="31.6" x2="106.4" y2="104.4" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+        <line x1="106.4" y1="31.6" x2="33.6" y2="104.4" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+        <!-- angle tick marks on outer ring -->
+        <line x1="70"   y1="17"  x2="70"   y2="21"  stroke="rgba(184,168,138,0.3)" stroke-width="0.7"/>
+        <line x1="120"  y1="68"  x2="116"  y2="68"  stroke="rgba(184,168,138,0.3)" stroke-width="0.7"/>
+        <line x1="70"   y1="119" x2="70"   y2="115" stroke="rgba(184,168,138,0.3)" stroke-width="0.7"/>
+        <line x1="20"   y1="68"  x2="24"   y2="68"  stroke="rgba(184,168,138,0.3)" stroke-width="0.7"/>
+        <!-- angle labels -->
+        <text x="67" y="14"  font-size="5" fill="rgba(255,255,255,0.28)" font-family="'Chakra Petch',monospace">000</text>
+        <text x="121" y="70" font-size="5" fill="rgba(255,255,255,0.28)" font-family="'Chakra Petch',monospace">090</text>
+        <text x="66" y="127" font-size="5" fill="rgba(255,255,255,0.28)" font-family="'Chakra Petch',monospace">180</text>
+        <text x="6"  y="70"  font-size="5" fill="rgba(255,255,255,0.28)" font-family="'Chakra Petch',monospace">270</text>
+        <!-- orbital track (angled ellipse) -->
+        <ellipse cx="70" cy="68" rx="46" ry="26" stroke="rgba(184,168,138,0.32)" stroke-width="0.9" fill="none"
+          stroke-dasharray="4 3" transform="rotate(-28 70 68)"/>
+        <!-- intercept trajectory lines -->
+        <line x1="22" y1="42" x2="118" y2="92" stroke="rgba(0,220,255,0.18)" stroke-width="0.7"/>
+        <line x1="30" y1="100" x2="110" y2="38" stroke="rgba(255,30,100,0.14)" stroke-width="0.7"/>
+        <!-- center dot -->
+        <circle cx="70" cy="68" r="1.8" fill="rgba(184,168,138,0.7)"/>
+        <!-- orbiting dot group (animated) -->
+        <g class="traj-polar-orbit">
+          <circle cx="116" cy="68" r="2.2" fill="rgba(0,220,255,0.85)"/>
+        </g>
+        <!-- data labels -->
+        <text x="4" y="118" font-size="5" fill="rgba(255,255,255,0.3)" font-family="'Chakra Petch',monospace">ELV: 023.4°</text>
+        <text x="4" y="125" font-size="5" fill="rgba(255,255,255,0.3)" font-family="'Chakra Petch',monospace">BRG: 047.2°</text>
+      </svg>
+
+      <!-- Cybertron Instagram Button — links, mittig -->
+      <a class="hero__cyb-insta" href="https://www.instagram.com/benni_pan" target="_blank" rel="noopener" aria-label="Instagram @benni_pan">
+        <div class="hero__cyb-insta__icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="20" height="20" rx="5" stroke="rgba(184,168,138,0.8)" stroke-width="1.8"/>
+            <circle cx="12" cy="12" r="5" stroke="rgba(184,168,138,0.8)" stroke-width="1.8"/>
+            <circle cx="17.5" cy="6.5" r="1.2" fill="rgba(184,168,138,0.8)"/>
+          </svg>
+        </div>
+        <div class="hero__cyb-insta__text">
+          <span class="hero__cyb-insta__label">SOCIAL // NET</span>
+          <span class="hero__cyb-insta__handle">@benni_pan</span>
+        </div>
+        <div class="hero__cyb-insta__line"></div>
+      </a>
+
+
+      <!-- Instagram — HUD-style link, bottom-right -->
+      <a class="hero__insta" href="https://www.instagram.com/benni_pan" target="_blank" rel="noopener" aria-label="Instagram @benni_pan">
+        <span class="hero__insta-tag">NET:// SOC</span>
+        <span class="hero__insta-handle">@benni_pan</span>
+        <div class="hero__insta-bar"></div>
+      </a>
+
+      <!-- Which Direction Logo — SVG-Nachbau, Zündschnur-Punkt wandert die Umrisse ab -->
+      <svg class="hero__wd-logo" viewBox="0 0 220 86" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <!-- Scharfer Glühpunkt -->
+          <filter id="wdDotGlow" x="-600%" y="-600%" width="1300%" height="1300%">
+            <feGaussianBlur stdDeviation="2.8" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <!-- Weicher Halo dahinter -->
+          <filter id="wdHalo" x="-700%" y="-700%" width="1500%" height="1500%">
+            <feGaussianBlur stdDeviation="6"/>
+          </filter>
+        </defs>
+
+        <!-- Faint outline: unverbrannte Zündschnur -->
+        <!-- W äußere Form -->
+        <path id="wdPathW" fill="none" stroke="rgba(190,148,55,0.18)" stroke-width="1.1"
+          d="M 9,54
+             C 4,61 2,69 6,72
+             C 15,77 38,77 68,68
+             C 74,65 78,64 75,68
+             C 72,72 72,76 76,77
+             C 86,80 108,74 114,62
+             C 100,32 78,6 52,3
+             C 34,0 16,5 10,17
+             C 5,27 6,42 9,54 Z"/>
+
+        <!-- W innerer Oval (Gegenform) -->
+        <path id="wdPathWi" fill="none" stroke="rgba(190,148,55,0.18)" stroke-width="1.1"
+          d="M 38,47
+             C 34,58 43,68 60,63
+             C 78,58 88,44 83,30
+             C 78,17 65,13 51,20
+             C 38,27 40,38 38,47 Z"/>
+
+        <!-- D äußere Form -->
+        <path id="wdPathD" fill="none" stroke="rgba(190,148,55,0.18)" stroke-width="1.1"
+          d="M 148,62
+             C 160,73 183,71 196,55
+             C 208,39 204,18 190,8
+             C 175,2 154,2 143,15
+             C 133,26 132,39 138,51
+             C 142,57 145,60 148,62 Z"/>
+
+        <!-- Punkt unterhalb W -->
+        <circle cx="91" cy="80" r="2.2" fill="none" stroke="rgba(190,148,55,0.18)" stroke-width="1"/>
+
+        <!-- Animierter Zündschnur-Punkt: W-außen → W-innen → D → Pause → restart -->
+        <g>
+          <!-- Halo (weich, gold) -->
+          <circle r="7" fill="rgb(215,160,35)" filter="url(#wdHalo)" opacity="0.4"/>
+          <!-- Glühkern (hell, scharf) -->
+          <circle r="2.2" fill="rgb(255,235,95)" filter="url(#wdDotGlow)" opacity="0.95"/>
+
+          <animateMotion id="wdAm1" dur="5.5s" repeatCount="1" fill="freeze"
+            begin="0s;wdAm3.end+1.2s" calcMode="linear">
+            <mpath href="#wdPathW" xlink:href="#wdPathW"/>
+          </animateMotion>
+          <animateMotion id="wdAm2" dur="3s" repeatCount="1" fill="freeze"
+            begin="wdAm1.end" calcMode="linear">
+            <mpath href="#wdPathWi" xlink:href="#wdPathWi"/>
+          </animateMotion>
+          <animateMotion id="wdAm3" dur="3.5s" repeatCount="1" fill="freeze"
+            begin="wdAm2.end" calcMode="linear">
+            <mpath href="#wdPathD" xlink:href="#wdPathD"/>
+          </animateMotion>
+        </g>
+      </svg>
+
     </div><!-- /hero__sticky -->
   </section>
 
@@ -1885,57 +2363,13 @@ em { font-style:italic; }
 
       <div class="panel-grid" id="panelGrid">
 
-        <!-- ── Videography ───────────────────────────────────────── -->
-        <div class="video-block" id="videoBlock">
-
-          <article class="panel panel--video-left" data-category="videography">
-            <div class="panel__inner">
-              <header class="panel__head"><span class="panel__tag">Videography</span><span class="panel__year">2025</span></header>
-              <div class="panel__video">
-                <iframe
-                  src="https://player.vimeo.com/video/1201612876?title=0&byline=0&portrait=0&color=b8a88a"
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  allowfullscreen
-                  title="Performance">
-                </iframe>
-              </div>
-              <h3 class="panel__title">Performance</h3>
-              <footer class="panel__foot"><span class="panel__meta">Videography · 2025</span><span class="panel__arrow" aria-hidden="true">↗</span></footer>
-            </div>
-          </article>
-
-          <article class="panel panel--video-right" data-category="videography">
-            <div class="panel__inner">
-              <header class="panel__head"><span class="panel__tag">Videography</span><span class="panel__year">2023</span></header>
-              <div class="panel__video-flex">
-                <iframe src="https://player.vimeo.com/video/1204862275?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="We should fly together"></iframe>
-              </div>
-              <h3 class="panel__title">We should fly together</h3>
-              <p class="panel__body">A fashion film shot in an abandoned ruin — created with friends to launch the first piece of a self-built fashion label. Raw spaces, honest movement, a shared vision.</p>
-              <footer class="panel__foot"><span class="panel__meta">Videography · 2023</span><span class="panel__arrow" aria-hidden="true">↗</span></footer>
-            </div>
-          </article>
-
-          <article class="panel panel--video-left" data-category="videography">
-            <div class="panel__inner">
-              <header class="panel__head"><span class="panel__tag">Videography</span><span class="panel__year">2026</span></header>
-              <div class="panel__video-flex" style="height:568px; flex:none;">
-                <iframe src="https://player.vimeo.com/video/1204874128?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Wo Musik für mich Zuhause ist"></iframe>
-              </div>
-              <h3 class="panel__title">Wo Musik für mich Zuhause ist</h3>
-              <p class="panel__body">Dieses Video entstand in Kooperation mit Charleen Lindner und dem Städtischen Sinfonieorchester Wels – aus Leidenschaft zur Musik und zur Unterstützung heimischer Kultur. Im Mittelpunkt stehen die Wertschätzung künstlerischer Arbeit, musikalischer Ausdruck und die besondere Atmosphäre, die entsteht, wenn Menschen ihre Begeisterung für Musik gemeinsam sichtbar machen.</p>
-              <footer class="panel__foot"><span class="panel__meta">Videography · 2026</span><span class="panel__arrow" aria-hidden="true">↗</span></footer>
-            </div>
-          </article>
-
-        </div>
-
-        <!-- ── Photography ───────────────────────────────────────── -->
         <!-- ── Other Accomplishments ──────────────────────────────── -->
-        <article class="panel panel--wide" data-category="other">
+        <article class="panel panel--full" data-category="other">
           <div class="panel__inner">
             <header class="panel__head"><span class="panel__tag">Other Accomplishments</span><span class="panel__year">2026</span></header>
             <h3 class="panel__title">OP-Licht</h3>
+            <p class="panel__body panel__body--fade">OP-Licht entstand Anfang 2026 in Lech am Arlberg – während meiner Zeit im Sanatorium Dr. Rhomberg. Die Wintermonate dort haben mir außergewöhnliche Einblicke ermöglicht: in die Arbeit als Physiotherapeut, aber auch weit darüber hinaus – vom Operationssaal über Anästhesie und technische OP-Assistenz bis hin zu komplexen medizinischen Verfahren.</p>
+            <span class="panel__read-more">Mehr lesen ↗</span>
             <audio id="opLichtAudio" preload="metadata">
               <source src="audio/OP_Licht_Master.wav" type="audio/wav">
             </audio>
@@ -1959,6 +2393,127 @@ em { font-style:italic; }
           </div>
         </article>
 
+        <!-- ── Videography ───────────────────────────────────────── -->
+        <div class="video-block" id="videoBlock">
+
+          <!-- Performance — volle Breite -->
+          <article class="panel panel--video-wide" data-category="videography">
+            <div class="panel__inner">
+              <header class="panel__head"><span class="panel__tag">Videography</span><span class="panel__year">2025</span></header>
+              <div class="panel__video">
+                <iframe src="https://player.vimeo.com/video/1201612876?title=0&byline=0&portrait=0&color=b8a88a" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Performance"></iframe>
+              </div>
+              <h3 class="panel__title">Filmmusik – Im Schatten der Verwandlung</h3>
+              <footer class="panel__foot"><span class="panel__meta">Videography · 2025</span><span class="panel__arrow" aria-hidden="true">↗</span></footer>
+            </div>
+          </article>
+
+          <!-- Which Direction Series — direkt nach Performance -->
+          <article class="panel panel--video-wide" data-category="videography" id="wdSeriesPanel">
+            <div class="panel__inner">
+              <header class="panel__head">
+                <span class="panel__tag">Videography · Series</span>
+                <span class="panel__year">2022 – 2023</span>
+              </header>
+              <h3 class="panel__title">Which Direction</h3>
+              <p class="panel__body" style="margin-bottom:1.5rem;">Eine nachhaltige Modemarke. Vier Kurzfilme. Gran Canaria bis Wien — eine Richtung.<br>Auf Thumbnail klicken zum Ansehen auf Vimeo.</p>
+              <div class="wd-thumb-row">
+                <a class="wd-thumb wd-thumb--portrait" href="https://vimeo.com/1205942954" target="_blank" rel="noopener" aria-label="The Tower V.1 auf Vimeo ansehen">
+                  <img src="https://vumbnail.com/1205942954.jpg" alt="The Tower V.1" loading="lazy">
+                  <div class="wd-thumb__overlay"><div class="wd-thumb__play">▶</div><span class="wd-thumb__label">Tower V.1</span></div>
+                </a>
+                <a class="wd-thumb wd-thumb--portrait" href="https://vimeo.com/1204862275" target="_blank" rel="noopener" aria-label="Mein erstes Shirt auf Vimeo ansehen">
+                  <img src="https://vumbnail.com/1204862275.jpg" alt="Mein erstes Shirt" loading="lazy">
+                  <div class="wd-thumb__overlay"><div class="wd-thumb__play">▶</div><span class="wd-thumb__label">Mein erstes Shirt</span></div>
+                </a>
+                <a class="wd-thumb wd-thumb--portrait" href="https://vimeo.com/1205945660" target="_blank" rel="noopener" aria-label="The Tower V.2 auf Vimeo ansehen">
+                  <img src="https://vumbnail.com/1205945660.jpg" alt="The Tower V.2" loading="lazy">
+                  <div class="wd-thumb__overlay"><div class="wd-thumb__play">▶</div><span class="wd-thumb__label">Tower V.2</span></div>
+                </a>
+                <a class="wd-thumb wd-thumb--landscape" href="https://vimeo.com/1205948150" target="_blank" rel="noopener" aria-label="Desert auf Vimeo ansehen">
+                  <img src="https://vumbnail.com/1205948150.jpg" alt="Desert" loading="lazy">
+                  <div class="wd-thumb__overlay"><div class="wd-thumb__play">▶</div><span class="wd-thumb__label">Desert · Gran Canaria</span></div>
+                </a>
+              </div>
+              <footer class="panel__foot">
+                <span class="panel__meta">Which Direction · 2022 – 2023</span>
+                <span class="panel__arrow" aria-hidden="true">↗</span>
+              </footer>
+            </div>
+          </article>
+
+          <!-- Tower V.1 — nur in All sichtbar -->
+          <article class="panel" data-category="all">
+            <div class="panel__inner">
+              <header class="panel__head"><span class="panel__tag">Which Direction</span><span class="panel__year">2023</span></header>
+              <div class="panel__video-portrait">
+                <iframe src="https://player.vimeo.com/video/1205942954?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="The Tower V.1"></iframe>
+              </div>
+              <h3 class="panel__title">The Tower V.1</h3>
+              <p class="panel__body">Ein Piece. Kein Boden. Nur Richtung — der Auftakt der Which Direction Collection.</p>
+              <div class="panel__detail" hidden>Ein Piece. Kein Boden. Nur Richtung.<br><br>The Tower V.1 ist der erste visuelle Ausdruck der Which Direction Collection – einer nachhaltigen Modemarke, die mehr sein will als Kleidung: ein Manifest. Das Video bricht aus der Horizontalen aus. Es klettert. Es expandiert.<br><br>Which Direction? In welche Richtung bewegt sich der Mensch, die Menschheit, das Universum? Während die Erde kleiner wird, dehnt sich der Himmel aus. The Tower V.1 hält diesen Moment fest – mit einem einzigen Piece, einer Person, einer Bewegung nach oben.<br><br>Die Which Direction Collection umfasst Beanie, Hose, Shirts, Pullover und Hoodies – nachhaltig produziert und konsequent gedacht.</div>
+              <footer class="panel__foot"><span class="panel__meta">Which Direction · 2023</span><span class="panel__arrow" aria-hidden="true">↗</span></footer>
+            </div>
+          </article>
+
+          <!-- Mein erstes Shirt — nur in All sichtbar -->
+          <article class="panel" data-category="all">
+            <div class="panel__inner">
+              <header class="panel__head"><span class="panel__tag">Which Direction</span><span class="panel__year">2023</span></header>
+              <div class="panel__video-portrait">
+                <iframe src="https://player.vimeo.com/video/1204862275?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Mein erstes Shirt"></iframe>
+              </div>
+              <h3 class="panel__title">Mein erstes Shirt</h3>
+              <p class="panel__body">A fashion film in an abandoned ruin. The first chapter of Which Direction.</p>
+              <div class="panel__detail" hidden>A fashion film shot in an abandoned ruin — created with friends to launch the first piece of a self-built fashion label. Raw spaces, honest movement, a shared vision. The opening chapter of the Which Direction series.</div>
+              <footer class="panel__foot"><span class="panel__meta">Which Direction · 2023</span><span class="panel__arrow" aria-hidden="true">↗</span></footer>
+            </div>
+          </article>
+
+          <!-- Tower V.2 — nur in All sichtbar -->
+          <article class="panel" data-category="all">
+            <div class="panel__inner">
+              <header class="panel__head"><span class="panel__tag">Which Direction</span><span class="panel__year">2023</span></header>
+              <div class="panel__video-portrait">
+                <iframe src="https://player.vimeo.com/video/1205945660?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="The Tower V.2"></iframe>
+              </div>
+              <h3 class="panel__title">The Tower V.2</h3>
+              <p class="panel__body">Derselbe Turm. Ein anderer Blick — Which Direction, zweiter Cut.</p>
+              <div class="panel__detail" hidden>The Tower V.2 ist der zweite Schnitt desselben Projekts – ein anderer Rhythmus, eine andere Perspektive, dieselbe Frage.<br><br>Which Direction? Das Video zeigt, wie sich Bedeutung verändert, wenn man den Blickwinkel wechselt. Gleiches Material, neue Wahrheit. Teil der Which Direction Collection – nachhaltige Mode als visuelles Manifest.</div>
+              <footer class="panel__foot"><span class="panel__meta">Which Direction · 2023</span><span class="panel__arrow" aria-hidden="true">↗</span></footer>
+            </div>
+          </article>
+
+          <!-- Desert — nur in All sichtbar -->
+          <article class="panel panel--video-landscape" data-category="all">
+            <div class="panel__inner">
+              <header class="panel__head"><span class="panel__tag">Which Direction</span><span class="panel__year">2022</span></header>
+              <div class="panel__video-landscape-wrap">
+                <iframe src="https://player.vimeo.com/video/1205948150?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Desert"></iframe>
+              </div>
+              <h3 class="panel__title">Desert</h3>
+              <p class="panel__body">Gran Canaria, eine Drohne, ein Piece — Which Direction auf seiner letzten Reise.</p>
+              <div class="panel__detail" hidden>Which Direction war während meines Studiums mehr als ein Projekt — es war eine Haltung. Egal wo ich war, die Marke war ein Teil von mir. Kamera, Drohne, ein paar kleinere Utensilien: das war alles, was ich brauchte.<br><br>Auf Gran Canaria fand ich in der rauen, kargen Landschaft genau den Rahmen, den Which Direction brauchte. Die Weite, das Licht, der Sand — nicht als Kulisse, sondern als Ausdruck. Ein Piece, eine Insel, eine Richtung.<br><br>Which Direction hat mich durch mein Studium begleitet, war überall dabei — und ist heute bewusst stillgelegt. Desert ist ein letztes Kapitel dieser Reise.</div>
+              <footer class="panel__foot"><span class="panel__meta">Which Direction · 2022</span><span class="panel__arrow" aria-hidden="true">↗</span></footer>
+            </div>
+          </article>
+
+          <!-- Wo Musik — nach Desert -->
+          <article class="panel" data-category="videography">
+            <div class="panel__inner">
+              <header class="panel__head"><span class="panel__tag">Videography</span><span class="panel__year">2026</span></header>
+              <div class="panel__video-portrait">
+                <iframe src="https://player.vimeo.com/video/1204874128?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Wo Musik für mich Zuhause ist"></iframe>
+              </div>
+              <h3 class="panel__title">Wo Musik für mich Zuhause ist</h3>
+              <p class="panel__body">In Zusammenarbeit mit dem Sinfonieorchester Wels — Musik als Heimat.</p>
+              <div class="panel__detail" hidden>Dieses Video entstand in Kooperation mit Charleen Lindner und dem Städtischen Sinfonieorchester Wels – aus Leidenschaft zur Musik und zur Unterstützung heimischer Kultur. Im Mittelpunkt stehen die Wertschätzung künstlerischer Arbeit, musikalischer Ausdruck und die besondere Atmosphäre, die entsteht, wenn Menschen ihre Begeisterung für Musik gemeinsam sichtbar machen.</div>
+              <footer class="panel__foot"><span class="panel__meta">Videography · 2026</span><span class="panel__arrow" aria-hidden="true">↗</span></footer>
+            </div>
+          </article>
+
+        </div>
+
       </div>
     </div>
   </section>
@@ -1971,7 +2526,10 @@ em { font-style:italic; }
         This archive is private.<br />
         <em>Access and collaboration by invitation.</em>
       </p>
-      <a class="contact__link" href="mailto:benedikt@pan-physio.com">benedikt@pan-physio.com</a>
+      <div style="display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;">
+        <a class="contact__link" href="mailto:benedikt@pan-physio.com">benedikt@pan-physio.com</a>
+        <a class="contact__link" href="https://www.instagram.com/benni_pan" target="_blank" rel="noopener">@benni_pan&ensp;↗</a>
+      </div>
       <div class="contact__rule" aria-hidden="true"></div>
       <p class="contact__copy">© 2021–2026 &nbsp;·&nbsp; All work retained by the author</p>
     </div>
@@ -2282,8 +2840,16 @@ panels.forEach(p => observer.observe(p));
   <div class="lyrics-overlay" id="lyricsOverlay">
     <button class="lyrics-overlay__close" onclick="closeLyrics()">✕ Schließen</button>
     <div class="lyrics-overlay__inner">
-      <div class="lyrics-overlay__progress" id="lyricsProgressBar" title="Klicken zum Spulen">
-        <div class="lyrics-overlay__progress-bar" id="lyricsProgress"></div>
+      <div class="lyrics-overlay__transport">
+        <button class="lyrics-overlay__playbtn" id="lyricsPlayBtn" onclick="toggleLyricsPlay()" title="Play / Pause">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="2" width="3.5" height="12" rx="0.5" fill="currentColor"/>
+            <rect x="9.5" y="2" width="3.5" height="12" rx="0.5" fill="currentColor"/>
+          </svg>
+        </button>
+        <div class="lyrics-overlay__progress" id="lyricsProgressBar" title="Klicken zum Spulen">
+          <div class="lyrics-overlay__progress-bar" id="lyricsProgress"></div>
+        </div>
       </div>
       <p class="lyrics-overlay__title">OP-Licht</p>
       <p class="lyrics-overlay__meta">feat. Saskia Kleemann &nbsp;·&nbsp; 2026</p>
@@ -2457,6 +3023,33 @@ panels.forEach(p => observer.observe(p));
   var scrollTimer = null;
   var rafId = null;
 
+  var PLAY_ICON  = '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><polygon points="3,2 13,8 3,14" fill="currentColor"/></svg>';
+  var PAUSE_ICON = '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="2" width="3.5" height="12" rx="0.5" fill="currentColor"/><rect x="9.5" y="2" width="3.5" height="12" rx="0.5" fill="currentColor"/></svg>';
+
+  function updatePlayBtn() {
+    var btn = document.getElementById('lyricsPlayBtn');
+    if (!btn || !audio) return;
+    btn.innerHTML = audio.paused ? PLAY_ICON : PAUSE_ICON;
+  }
+
+  function toggleLyricsPlay() {
+    if (!audio) return;
+    if (audio.paused) {
+      audio.play();
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(updateLyrics);
+    } else {
+      audio.pause();
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    }
+  }
+
+  if (audio) {
+    audio.addEventListener('play',  updatePlayBtn);
+    audio.addEventListener('pause', updatePlayBtn);
+    audio.addEventListener('ended', updatePlayBtn);
+  }
+
   function openLyrics() {
     overlay.classList.add('is-open');
     document.body.style.overflow = 'hidden';
@@ -2468,7 +3061,6 @@ panels.forEach(p => observer.observe(p));
   function closeLyrics() {
     overlay.classList.remove('is-open');
     document.body.style.overflow = '';
-    /* audio keeps playing — no audio.pause() here */
   }
 
   overlay.addEventListener('scroll', function() {
