@@ -1711,6 +1711,24 @@ body.dev-mode .debug-snake-button {
               <span style="color:var(--gold);font-size:15px;letter-spacing:3px;">★★★★★</span>
               <span style="font-size:10px;letter-spacing:.15em;color:rgba(201,168,76,0.45);font-family:'DM Sans',sans-serif;">5.0 / 5</span>
             </div>
+            <div class="rev-card-text">&ldquo;Ich hatte selten das Gef&uuml;hl, so genau geh&ouml;rt zu werden. Es wird wirklich nachgefragt, statt gleich loszulegen &ndash; und die Behandlung setzt dann genau dort an, wo es n&ouml;tig ist = hohe fachliche Kompetenz. Ich war schneller wieder fit, als ich gedacht h&auml;tte. Sehr gerne weiterempfohlen!&rdquo;</div>
+            <div class="rev-card-author">&mdash; Lisa, <span style="opacity:.6">Salzburg</span></div>
+            <div class="rev-card-date">2026</div>
+          </div>
+          <div class="rev-card">
+            <div class="rev-card-stars">
+              <span style="color:var(--gold);font-size:15px;letter-spacing:3px;">★★★★★</span>
+              <span style="font-size:10px;letter-spacing:.15em;color:rgba(201,168,76,0.45);font-family:'DM Sans',sans-serif;">5.0 / 5</span>
+            </div>
+            <div class="rev-card-text">&ldquo;Ich bin durch einen gl&uuml;cklichen Zufall auf Benedikt gesto&szlig;en und seitdem begleitet er meine Mama zuverl&auml;ssig auf ihrem Weg &ndash; erst mit Hausbesuchen, mittlerweile direkt im Pflegeheim. Was mich besonders beeindruckt: er nimmt meine Mama genau so an, wie sie an dem jeweiligen Tag gerade ist, und findet immer genau das, was sie in diesem Moment braucht. Bei &auml;lteren Menschen kann sich das von Tag zu Tag &auml;ndern, und oft ist es gar nicht nur die Therapie an sich, sondern einfach jemand, der da ist und zuh&ouml;rt. Genau das bringt Benedikt mit: fachlich f&auml;hig und gleichzeitig sehr einf&uuml;hlsam. Ich kann ihn zu 100% weiterempfehlen und bin sehr dankbar, dass wir ihn gefunden haben.&rdquo;</div>
+            <div class="rev-card-author">&mdash; Nicole, <span style="opacity:.6">Wels</span></div>
+            <div class="rev-card-date">2026</div>
+          </div>
+          <div class="rev-card">
+            <div class="rev-card-stars">
+              <span style="color:var(--gold);font-size:15px;letter-spacing:3px;">★★★★★</span>
+              <span style="font-size:10px;letter-spacing:.15em;color:rgba(201,168,76,0.45);font-family:'DM Sans',sans-serif;">5.0 / 5</span>
+            </div>
             <div class="rev-card-text">&ldquo;Seit 2024 werde ich von Benedikt wegen einer neurologischen Erkrankung behandelt, haupts&auml;chlich im Rahmen von Hausbesuchen. Als ehemaliger Sportler bin ich Patient bei ihm. Benedikt ist der ideale Physiotherapeut; im Laufe der Jahre habe ich seine Fachkompetenz, sein Einf&uuml;hlungsverm&ouml;gen, sein Engagement und seine Freundlichkeit sehr sch&auml;tzen gelernt.&rdquo;</div>
             <div class="rev-card-author">&mdash; Klaus, <span style="opacity:.6">Salzburg</span></div>
             <div class="rev-card-date">2026</div>
@@ -2540,6 +2558,20 @@ function loadReviews(){
   const list = document.getElementById('rv-list');
   // Statische Rezensionen — wird später durch Google Sheets Automation ersetzt
   const staticReviews = [
+    {
+      name: 'Lisa',
+      ort: 'Salzburg',
+      sterne: 5,
+      text: 'Ich hatte selten das Gefühl, so genau gehört zu werden. Es wird wirklich nachgefragt, statt gleich loszulegen – und die Behandlung setzt dann genau dort an, wo es nötig ist = hohe fachliche Kompetenz. Ich war schneller wieder fit, als ich gedacht hätte. Sehr gerne weiterempfohlen!',
+      timestamp: '2026'
+    },
+    {
+      name: 'Nicole',
+      ort: 'Wels',
+      sterne: 5,
+      text: 'Ich bin durch einen glücklichen Zufall auf Benedikt gestoßen und seitdem begleitet er meine Mama zuverlässig auf ihrem Weg – erst mit Hausbesuchen, mittlerweile direkt im Pflegeheim. Was mich besonders beeindruckt: er nimmt meine Mama genau so an, wie sie an dem jeweiligen Tag gerade ist, und findet immer genau das, was sie in diesem Moment braucht. Bei älteren Menschen kann sich das von Tag zu Tag ändern, und oft ist es gar nicht nur die Therapie an sich, sondern einfach jemand, der da ist und zuhört. Genau das bringt Benedikt mit: fachlich fähig und gleichzeitig sehr einfühlsam. Ich kann ihn zu 100% weiterempfehlen und bin sehr dankbar, dass wir ihn gefunden haben.',
+      timestamp: '2026'
+    },
     {
       name: 'Klaus',
       ort: 'Salzburg',
