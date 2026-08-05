@@ -1189,6 +1189,16 @@ body.dev-mode .debug-snake-button {
 .lk.expanded .lk-more-btn::after { content: ' ↑'; }
 .lk:not(.expanded) .lk-more-btn::after { content: ' ↓'; }
 
+/* ── LEISTUNGEN: schlichtere mobile Ansicht ──────────── */
+@media(max-width:600px){
+  .leistungen-grid{gap:1px;}
+  .lk{padding:16px 18px;min-height:0;}
+  .lk-title{min-height:0;margin-bottom:6px;}
+  .lk-expand{max-height:200px;opacity:1;}
+  .lk-desc{font-size:12px;line-height:1.5;}
+  .lk-more-btn{padding-top:8px;font-size:10px;}
+}
+
 </style>
 </head>
 <body>
