@@ -110,7 +110,7 @@ html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--gold) var
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
 body{
   background:#060810;
-  color:var(--white);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;
+  color:var(--white);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;
 }
 footer{position:relative;z-index:2;}
 section:not(#hero){position:relative;z-index:2;}
@@ -123,16 +123,9 @@ section:not(#hero){position:relative;z-index:2;}
 .sd-hidden{ display:none; }
 #kontakt{background:rgba(6,8,16,0.7)!important;}
 footer{background:#030508!important;}
-#cur,#cur-ring{pointer-events:none;z-index:9999;position:fixed;border-radius:50%;transform:translate(-50%,-50%);}
-#cur{width:10px;height:10px;background:var(--gold);transition:width .3s,height .3s;}
-#cur-ring{width:36px;height:36px;border:1px solid rgba(201,168,76,0.5);z-index:9998;transition:width .3s,height .3s,opacity .3s;}
-@media(hover:none){#cur,#cur-ring{display:none;}body{cursor:auto;}}
-body:has(a:hover) #cur,body:has(button:hover) #cur{width:18px;height:18px;}
-body:has(a:hover) #cur-ring,body:has(button:hover) #cur-ring{width:54px;height:54px;opacity:.4;}
-
 #nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:transparent;transition:background .4s,padding .3s;}
 #nav.scrolled{background:rgba(8,10,12,0.97);padding:14px 48px;}
-.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;cursor:none;height:38px;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;height:38px;}
 .nav-brand{
   font-family:'Playfair Display',serif;
   font-size:17px;font-weight:400;
@@ -143,9 +136,9 @@ body:has(a:hover) #cur-ring,body:has(button:hover) #cur-ring{width:54px;height:5
 .nav-logo svg{height:32px;width:auto;fill:var(--gold);transition:fill .3s;}
 .nav-logo:hover svg{fill:var(--gold2);}
 .nav-links{display:flex;gap:32px;list-style:none;}
-.nav-links a{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;cursor:none;}
+.nav-links a{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;}
 .nav-links a:hover{color:var(--gold);}
-.nav-cta{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;padding:10px 22px;border:1px solid var(--gold);color:var(--gold);background:transparent;cursor:none;transition:background .3s,color .3s;}
+.nav-cta{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;padding:10px 22px;border:1px solid var(--gold);color:var(--gold);background:transparent;transition:background .3s,color .3s;}
 .nav-cta:hover{background:var(--gold);color:var(--bg);}
 .nav-burger{display:flex;flex-direction:column;gap:5px;background:none;border:none;padding:4px;cursor:pointer;}
 .nav-burger span{display:block;width:22px;height:1.5px;background:var(--gold);transition:transform .3s,opacity .3s;}
@@ -195,7 +188,7 @@ body:has(a:hover) #cur-ring,body:has(button:hover) #cur-ring{width:54px;height:5
 
 /* NODES — statisch, wie funktionierender SVG-Ansatz */
 /* Satellite nodes — positioned & shown via JS */
-.sat-node{display:flex;align-items:center;gap:10px;cursor:none;}
+.sat-node{display:flex;align-items:center;gap:10px;}
 .sat-node.left{flex-direction:row-reverse;}
 .sat-dot{width:11px;height:11px;border-radius:50%;background:var(--gold);box-shadow:0 0 16px rgba(201,168,76,1.0);flex-shrink:0;transition:transform .3s;}
 .sat-node:hover .sat-dot{transform:scale(1.8);}
@@ -207,12 +200,33 @@ body:has(a:hover) #cur-ring,body:has(button:hover) #cur-ring{width:54px;height:5
   background:rgba(8,10,12,0.92);
   color:var(--white);font-family:'DM Sans',sans-serif;
   font-size:11px;letter-spacing:0.2em;text-transform:uppercase;
-  cursor:none;text-decoration:none;white-space:nowrap;
+  text-decoration:none;white-space:nowrap;
   transition:border-color .3s,background .3s,color .3s;
   box-shadow:0 0 20px rgba(201,168,76,0.08);
 }
 .sn-btn:hover{border-color:var(--gold);background:rgba(201,168,76,0.15);color:var(--gold);}
 @media(max-width:820px){.sat-node{display:none!important;}}
+
+/* ── HERO NAV: statisch, nur mobile ──────────────────── */
+.hero-nav-mobile{display:none;}
+@media(max-width:820px){
+  .hero-nav-mobile{
+    display:flex;flex-direction:column;gap:10px;
+    position:absolute;left:20px;top:50%;transform:translateY(-50%);
+    z-index:6;
+  }
+  .hnm-item{
+    display:flex;align-items:center;gap:10px;
+    padding:9px 16px 9px 9px;border-radius:999px;
+    border:1px solid rgba(232,201,122,0.55);
+    background:rgba(10,14,26,0.75);
+    color:var(--white);text-decoration:none;
+    font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+    box-shadow:0 0 14px rgba(201,168,76,0.15);
+  }
+  .hnm-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:26px;height:26px;color:var(--gold2);}
+  .hnm-icon svg{width:16px;height:16px;display:block;}
+}
 
 .scroll-cue{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(240,237,232,0.25);opacity:0;animation:fadeUp .8s ease 1.8s forwards;}
 .scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite;}
@@ -278,7 +292,7 @@ section{padding:100px 0;}
 .lk:hover{border-color:rgba(201,168,76,0.35);background:rgba(201,168,76,0.04);}
 .lk:hover::before{transform:scaleX(1);}
 
-.lk-title{min-height:3em;font-family:'Playfair Display',serif;font-size:clamp(14px,1.4vw,18px);font-weight:400;margin-bottom:10px;color:var(--white);line-height:1.3;word-break:break-word;hyphens:auto;}
+.lk-title{min-height:3em;font-family:'DM Sans',sans-serif;font-size:clamp(17px,1.8vw,22px);font-weight:500;margin-bottom:10px;color:var(--white);line-height:1.3;word-break:break-word;hyphens:auto;}
 .lk-desc{font-size:13px;line-height:1.7;color:var(--muted);}
 
 #preise{background:var(--bg);}
@@ -318,7 +332,7 @@ section{padding:100px 0;}
 .ff input,.ff textarea,.ff select{background:var(--bg3);border:1px solid var(--border);color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;padding:13px 15px;outline:none;transition:border-color .3s;resize:none;-webkit-appearance:none;appearance:none;}
 .ff input:focus,.ff textarea:focus,.ff select:focus{border-color:rgba(201,168,76,0.5);}
 .ff select option{background:var(--bg3);}
-.btn-submit{padding:15px 36px;background:var(--gold);color:var(--bg);border:none;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;font-weight:500;cursor:none;transition:background .3s;align-self:flex-start;}
+.btn-submit{padding:15px 36px;background:var(--gold);color:var(--bg);border:none;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;font-weight:500;transition:background .3s;align-self:flex-start;}
 .btn-submit:hover{background:var(--gold2);}
 @media(hover:none){.btn-submit{cursor:pointer;}}
 
@@ -344,7 +358,7 @@ footer{padding:36px 48px;border-top:1px solid var(--border);display:flex;align-i
 @media(max-width:600px){footer{padding:28px 20px;flex-direction:column;align-items:flex-start;}}
 .footer-logo svg{height:24px;width:auto;fill:var(--gold);opacity:0.6;}
 .footer-links{display:flex;gap:20px;flex-wrap:wrap;position:static;}
-.footer-links a{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;cursor:none;}
+.footer-links a{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;}
 .footer-links a:hover{color:var(--gold);}
 .footer-copy{font-size:11px;color:rgba(240,237,232,0.18);}
 
@@ -1022,29 +1036,6 @@ footer {
 }
 
 
-/* ── CURSOR FIX: Immer über allen Layern ─────────────────
-   Behebt das Problem mit dem Custom Cursor im Hamburger-Menü */
-
-/* Cursor über ALLES — Mobile Menu hat z-index:9999 */
-#cur {
-  position: fixed !important;
-  z-index: 999999 !important;
-  pointer-events: none !important;
-  transform: translate(-50%, -50%);
-}
-#cur-ring {
-  z-index: 999999 !important;
-  pointer-events: none !important;
-}
-
-/* System-Cursor im Menü verstecken — nur Custom Cursor sichtbar */
-.mobile-menu,
-.mobile-menu a,
-.mobile-menu button {
-  cursor: none !important;
-}
-
-
 /* ── LANGUAGE SWITCHER ───────────────────────────────── */
 #lang-switcher{
   display:flex;align-items:center;gap:0;
@@ -1058,7 +1049,6 @@ footer {
   padding:6px 10px;
   background:none;border:none;
   color:rgba(240,237,232,0.3);
-  cursor:none;
   transition:all .3s;
   font-family:'DM Sans',sans-serif;
   font-size:9px;letter-spacing:.18em;
@@ -1193,7 +1183,7 @@ body.dev-mode .debug-snake-button {
 @media(max-width:600px){
   .leistungen-grid{gap:1px;}
   .lk{padding:16px 18px;min-height:0;}
-  .lk-title{min-height:0;margin-bottom:6px;}
+  .lk-title{min-height:0;margin-bottom:6px;font-size:18px;}
   .lk-expand{max-height:200px;opacity:1;}
   .lk-desc{font-size:12px;line-height:1.5;}
   .lk-more-btn{padding-top:8px;font-size:10px;}
@@ -1202,8 +1192,6 @@ body.dev-mode .debug-snake-button {
 </style>
 </head>
 <body>
-
-<div id="cur"></div><div id="cur-ring"></div>
 
 <div class="mobile-menu" id="mm">
   <button class="mobile-close" id="mc">&#x2715;</button>
@@ -1266,8 +1254,29 @@ body.dev-mode .debug-snake-button {
     <p class="hero-tagline" data-lang="hero-tagline">Individuelle Therapie nach Ma&#xDF; &mdash; in der Praxis oder direkt bei Ihnen zuhause.</p>
   </div>
 
-
-
+  <!-- ══ HERO NAV MOBILE — statisch, nur < 820px sichtbar ══ -->
+  <div class="hero-nav-mobile">
+    <a href="#kontakt" class="hnm-item">
+      <span class="hnm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
+      <span data-lang="sat-kontakt">Kontakt</span>
+    </a>
+    <a href="#leistungen" class="hnm-item">
+      <span class="hnm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h6a4 4 0 0 0 4-4v-4.5a1.25 1.25 0 0 0-2.5 0V14"/><path d="M15.5 12.5V10a1.25 1.25 0 0 0-2.5 0v2"/><path d="M13 11V8a1.25 1.25 0 0 0-2.5 0v4"/><path d="M10.5 12V9a1.25 1.25 0 0 0-2.5 0v7l-1.6-1.6a1.3 1.3 0 0 0-1.9 1.8L8 21"/></svg></span>
+      <span data-lang="sat-leistungen">Leistungen</span>
+    </a>
+    <a href="pan-physio_25/ueber_mich.html" class="hnm-item">
+      <span class="hnm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg></span>
+      <span data-lang="sat-ueber">&#xDC;ber mich</span>
+    </a>
+    <a href="pan-physio_25/preise.html" class="hnm-item">
+      <span class="hnm-icon"><svg viewBox="0 0 24 24"><text x="12" y="17" font-size="16" font-family="'DM Sans',sans-serif" font-weight="600" text-anchor="middle" fill="currentColor">&#8364;</text></svg></span>
+      <span data-lang="sat-preise">Preise</span>
+    </a>
+    <a href="#testimonials" class="hnm-item">
+      <span class="hnm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 6.1 6.4.5-5 4.2 1.6 6.3L12 16.9 6.4 20.1 8 13.8 3 9.6l6.4-.5z"/></svg></span>
+      <span data-lang="sat-testimonials">Rezensionen</span>
+    </a>
+  </div>
 
   <div class="scroll-cue"><span>Scrollen</span><div class="scroll-line"></div></div>
 </section>
@@ -1750,11 +1759,6 @@ body.dev-mode .debug-snake-button {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" crossorigin="anonymous"></script>
 <script>
-// ── CURSOR ──────────────────────────────────────────────────
-const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
-(function ar(){rx=mx;ry=my;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(ar);})();
 
 // ── NAV ─────────────────────────────────────────────────────
 document.addEventListener('keydown',e=>{
@@ -2328,8 +2332,7 @@ document.getElementById('formSubmit').onclick = async () => {
         'pointer-events:' + (visible ? 'auto' : 'none') + ';' +
         'transform:translateY(-50%) ' + (isLeft ? 'translateX(-100%)' : 'translateX(0)') + ';' +
         'transition:opacity .12s;' +
-        'z-index:50;' +
-        'cursor:none;';
+        'z-index:50;';
     });
   }
 

@@ -2852,7 +2852,7 @@ panels.forEach(p => observer.observe(p));
         </div>
       </div>
       <p class="lyrics-overlay__title">OP-Licht</p>
-      <p class="lyrics-overlay__meta">feat. Saskia Kleemann &nbsp;·&nbsp; 2026</p>
+      <p class="lyrics-overlay__meta">coop. with Saskia Kleemann &nbsp;·&nbsp; 2026</p>
       <span class="lyrics-section-label">[Intro]</span>
       <span class="lyrics-line" data-t="4">Ey… läuft das schon?</span>
       <span class="lyrics-line" data-t="7">Okay… lass einfach.</span>
@@ -3107,7 +3107,9 @@ panels.forEach(p => observer.observe(p));
   });
 
   document.addEventListener('keydown', function(e) {
+    if (!overlay.classList.contains('is-open')) return;
     if (e.key === 'Escape') closeLyrics();
+    if (e.key === ' ') { e.preventDefault(); toggleLyricsPlay(); }
   });
   </script>
 </body>
