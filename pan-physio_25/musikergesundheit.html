@@ -64,24 +64,18 @@
 }
 html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--gold) var(--bg);}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
-body{background:#060810;color:var(--white);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
-#cur,#cur-ring{pointer-events:none;z-index:9999;position:fixed;border-radius:50%;transform:translate(-50%,-50%);}
-#cur{width:10px;height:10px;background:var(--gold);transition:width .3s,height .3s;}
-#cur-ring{width:36px;height:36px;border:1px solid rgba(201,168,76,0.5);z-index:9998;transition:width .3s,height .3s,opacity .3s;}
-@media(hover:none){#cur,#cur-ring{display:none;}body{cursor:auto;}}
-body:has(a:hover) #cur,body:has(button:hover) #cur{width:18px;height:18px;}
-body:has(a:hover) #cur-ring,body:has(button:hover) #cur-ring{width:54px;height:54px;opacity:.4;}
+body{background:#060810;color:var(--white);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;}
 
 #nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;background:rgba(8,10,12,0.97);transition:background .4s,padding .3s;}
-.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;cursor:none;height:38px;}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;height:38px;}
 .nav-brand{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;color:var(--white);letter-spacing:0.08em;line-height:1;}
 .nav-brand em{font-style:normal;color:var(--gold);font-weight:200;letter-spacing:0.20em;font-family:'DM Sans',sans-serif;}
 .nav-logo svg{height:32px;width:auto;fill:var(--gold);transition:fill .3s;}
 .nav-logo:hover svg{fill:var(--gold2);}
 .nav-links{display:flex;gap:32px;list-style:none;}
-.nav-links a{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;cursor:none;}
+.nav-links a{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s;}
 .nav-links a:hover{color:var(--gold);}
-.nav-cta{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;padding:10px 22px;border:1px solid var(--gold);color:var(--gold);background:transparent;cursor:none;transition:background .3s,color .3s;}
+.nav-cta{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;padding:10px 22px;border:1px solid var(--gold);color:var(--gold);background:transparent;transition:background .3s,color .3s;}
 .nav-cta:hover{background:var(--gold);color:var(--bg);}
 .nav-burger{display:flex;flex-direction:column;gap:5px;background:none;border:none;padding:4px;cursor:pointer;}
 .nav-burger span{display:block;width:22px;height:1.5px;background:var(--gold);transition:transform .3s,opacity .3s;}
@@ -154,8 +148,6 @@ footer{padding:36px 48px;border-top:1px solid var(--border);display:flex;align-i
 </head>
 <body>
 
-<div id="cur"></div>
-<div id="cur-ring"></div>
 
 <nav id="nav">
   <a href="../index.html#hero" class="nav-logo" aria-label="PAN Physio">
@@ -285,15 +277,6 @@ footer{padding:36px 48px;border-top:1px solid var(--border);display:flex;align-i
 </footer>
 
 <script>
-// Cursor
-(function(){
-  const c=document.getElementById('cur'), r=document.getElementById('cur-ring');
-  if(!c||!r) return;
-  let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;c.style.left=mx+'px';c.style.top=my+'px';});
-  (function loop(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;r.style.left=rx+'px';r.style.top=ry+'px';requestAnimationFrame(loop);})();
-})();
-
 // Nav scroll
 window.addEventListener('scroll',()=>{
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY>40);
