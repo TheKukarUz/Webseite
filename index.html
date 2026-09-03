@@ -51,10 +51,8 @@
         "addressCountry": "AT"
       },
       "openingHoursSpecification": [
-        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Monday", "opens": "07:00", "closes": "22:00" },
-        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "15:30", "closes": "22:00" },
-        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "10:00", "closes": "17:00" },
-        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "10:00", "closes": "22:00" }
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Wednesday", "opens": "08:00", "closes": "15:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "08:00", "closes": "22:00" }
       ],
       "areaServed": [
         { "@type": "City", "name": "Wels" },
@@ -1369,13 +1367,13 @@ body.dev-mode .debug-snake-button {
             <p class="praxis-desc" data-lang="praxis-wels-desc">Eine meiner Räumlichkeiten befindet sich direkt im Anytime Fitness in Wels. Die moderne Umgebung bietet ideale Voraussetzungen für eine aktive und praxisnahe Therapie. Neben der physiotherapeutischen Behandlung können Bewegungsabläufe gezielt analysiert, Übungen direkt umgesetzt und der Übergang in ein selbstständiges Training optimal begleitet werden.<br><br>Die Therapie richtet sich dabei nicht nur an sportlich aktive Menschen, sondern an alle Personen, die ihre Beweglichkeit, Belastbarkeit und Lebensqualität nachhaltig verbessern möchten.</p>
             <p class="praxis-address">Dragonerstra&szlig;e 42a<br>4600 Wels, Österreich</p>
             <p class="praxis-oz-title" data-lang="praxis-oz-title">Öffnungszeiten</p>
-            <div class="praxis-oz-row"><span class="praxis-oz-day" data-lang="praxis-mo">Montag</span><span class="praxis-oz-time">7:00 – 22:00 Uhr</span></div>
-            <div class="praxis-oz-row"><span class="praxis-oz-day" data-lang="praxis-di">Dienstag</span><div style="text-align:right;"><div class="praxis-oz-note" data-lang="praxis-vereinbarung">nach Vereinbarung</div></div></div>
-            <div class="praxis-oz-row"><span class="praxis-oz-day" data-lang="praxis-mi">Mittwoch</span><div style="text-align:right;"><div class="praxis-oz-note" data-lang="praxis-vereinbarung">nach Vereinbarung</div></div></div>
-            <div class="praxis-oz-row"><span class="praxis-oz-day" data-lang="praxis-do">Donnerstag</span><span class="praxis-oz-time">15:30 – 22:00 Uhr</span></div>
-            <div class="praxis-oz-row"><span class="praxis-oz-day" data-lang="praxis-fr">Freitag</span><div style="text-align:right;"><div class="praxis-oz-note" data-lang="praxis-vereinbarung">nach Vereinbarung</div></div></div>
-            <div class="praxis-oz-row"><span class="praxis-oz-day" data-lang="praxis-sa">Samstag</span><span class="praxis-oz-time">10:00 – 17:00 Uhr</span></div>
-            <div class="praxis-oz-row"><span class="praxis-oz-day" data-lang="praxis-so">Sonntag</span><span class="praxis-oz-time">10:00 – 22:00 Uhr</span></div>
+            <div class="praxis-oz-row"><span class="praxis-oz-day" data-lang="praxis-mo">Montag</span><div class="praxis-oz-note" data-lang="praxis-geschlossen">geschlossen</div></div>
+            <div class="praxis-oz-row"><span class="praxis-oz-day" data-lang="praxis-di">Dienstag</span><div class="praxis-oz-note" data-lang="praxis-geschlossen">geschlossen</div></div>
+            <div class="praxis-oz-row"><span class="praxis-oz-day" data-lang="praxis-mi">Mittwoch</span><span class="praxis-oz-time">8:00 – 15:00 Uhr</span></div>
+            <div class="praxis-oz-row"><span class="praxis-oz-day" data-lang="praxis-do">Donnerstag</span><div class="praxis-oz-note" data-lang="praxis-geschlossen">geschlossen</div></div>
+            <div class="praxis-oz-row"><span class="praxis-oz-day" data-lang="praxis-fr">Freitag</span><span class="praxis-oz-time">8:00 – 22:00 Uhr</span></div>
+            <div class="praxis-oz-row"><span class="praxis-oz-day" data-lang="praxis-sa">Samstag</span><div style="text-align:right;"><span class="praxis-oz-time">8:00 – 22:00 Uhr</span><div class="praxis-oz-note" data-lang="praxis-vereinbarung">nach Vereinbarung</div></div></div>
+            <div class="praxis-oz-row"><span class="praxis-oz-day" data-lang="praxis-so">Sonntag</span><div style="text-align:right;"><span class="praxis-oz-time">8:00 – 22:00 Uhr</span><div class="praxis-oz-note" data-lang="praxis-vereinbarung">nach Vereinbarung</div></div></div>
           </div>
         </div>
       </div>
@@ -1897,11 +1895,11 @@ function updateChecklist(){
 
 const PRAXIS_INFO = {
   de: {
-    'praxis-wels':     '<strong style="color:var(--gold);font-weight:400;">Praxis Wels</strong><br>Dragonerstraße 42a, 4600 Wels<br><span style="font-size:12px;color:rgba(240,237,232,0.45);">Mo 7–22 Uhr &nbsp;·&nbsp; Di, Mi, Fr nach Vereinbarung &nbsp;·&nbsp; Do 15:30–22 Uhr &nbsp;·&nbsp; Sa 10–17 Uhr &nbsp;·&nbsp; So 10–22 Uhr</span>',
+    'praxis-wels':     '<strong style="color:var(--gold);font-weight:400;">Praxis Wels</strong><br>Dragonerstraße 42a, 4600 Wels<br><span style="font-size:12px;color:rgba(240,237,232,0.45);">Mo, Di, Do geschlossen &nbsp;·&nbsp; Mi 8–15 Uhr &nbsp;·&nbsp; Fr 8–22 Uhr &nbsp;·&nbsp; Sa, So nach Vereinbarung (ca. 8–22 Uhr)</span>',
     'praxis-salzburg': '<strong style="color:var(--gold);font-weight:400;">Praxis Salzburg</strong><br>Alpenstraße 99, 5020 Salzburg<br><span style="font-size:12px;color:rgba(240,237,232,0.45);">Jeden zweiten Donnerstag 9–13 Uhr</span>',
   },
   en: {
-    'praxis-wels':     '<strong style="color:var(--gold);font-weight:400;">Practice Wels</strong><br>Dragonerstraße 42a, 4600 Wels<br><span style="font-size:12px;color:rgba(240,237,232,0.45);">Mon 7–22:00 &nbsp;·&nbsp; Tue, Wed, Fri by appt. &nbsp;·&nbsp; Thu 15:30–22:00 &nbsp;·&nbsp; Sat 10–17:00 &nbsp;·&nbsp; Sun 10–22:00</span>',
+    'praxis-wels':     '<strong style="color:var(--gold);font-weight:400;">Practice Wels</strong><br>Dragonerstraße 42a, 4600 Wels<br><span style="font-size:12px;color:rgba(240,237,232,0.45);">Mon, Tue, Thu closed &nbsp;·&nbsp; Wed 8:00–15:00 &nbsp;·&nbsp; Fri 8:00–22:00 &nbsp;·&nbsp; Sat, Sun by appt. (approx. 8:00–22:00)</span>',
     'praxis-salzburg': '<strong style="color:var(--gold);font-weight:400;">Practice Salzburg</strong><br>Alpenstraße 99, 5020 Salzburg<br><span style="font-size:12px;color:rgba(240,237,232,0.45);">Every second Thursday 9:00–13:00</span>',
   }
 };
@@ -4313,6 +4311,7 @@ const TRANSLATIONS = {
     'praxis-do':            'Donnerstag',
     'praxis-saso':          'Sa & So',
     'praxis-vereinbarung':  'nach Vereinbarung',
+    'praxis-geschlossen':   'geschlossen',
     'praxis-sbg-note':      'jeden zweiten Donnerstag',
     'praxis-wels-region':   'Oberösterreich',
     'praxis-sbg-region':    'Salzburg',
@@ -4575,6 +4574,7 @@ const TRANSLATIONS = {
     'praxis-do':            'Thursday',
     'praxis-saso':          'Sat & Sun',
     'praxis-vereinbarung':  'by appointment',
+    'praxis-geschlossen':   'closed',
     'praxis-sbg-note':      'every second Thursday',
     'praxis-wels-region':   'Upper Austria',
     'praxis-sbg-region':    'Salzburg',
