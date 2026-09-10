@@ -859,6 +859,11 @@ PAN Physio
   transition:background .3s,color .3s;
 }
 .ts-cta:hover{background:var(--gold);color:var(--bg);}
+.ts-info{position:relative;display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;margin-left:6px;vertical-align:middle;cursor:pointer;}
+.ts-info-icon{width:16px;height:16px;border-radius:50%;border:1px solid rgba(201,168,76,0.5);color:var(--gold);font-family:'DM Sans',sans-serif;font-size:10px;font-style:normal;display:flex;align-items:center;justify-content:center;line-height:1;transition:border-color .3s,background .3s;}
+.ts-info:hover .ts-info-icon,.ts-info.open .ts-info-icon{border-color:var(--gold);background:rgba(201,168,76,0.15);}
+.ts-info-tip{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);width:260px;max-width:78vw;background:rgba(8,10,12,0.97);border:1px solid rgba(201,168,76,0.3);border-radius:8px;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:300;letter-spacing:0.02em;line-height:1.6;color:rgba(240,237,232,0.85);text-align:left;text-transform:none;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s,visibility .2s;z-index:20;box-shadow:0 10px 30px rgba(0,0,0,0.4);}
+.ts-info:hover .ts-info-tip,.ts-info.open .ts-info-tip{opacity:1;visibility:visible;pointer-events:auto;}
 @media(max-width:600px){#termin-slogan{padding:0 28px;}}
 
 /* Star 6 hidden by default, shown after egg1 */
@@ -1282,7 +1287,7 @@ body.dev-mode .debug-snake-button {
 
 <!-- ══ TERMIN SLOGAN ════════════════════════════════════ -->
 <section id="termin-slogan">
-  <h2 class="ts-title" data-lang="ts-title">Termin ohne <em>Wartezeit</em></h2>
+  <h2 class="ts-title"><span data-lang="ts-title">Termin ohne <em>Wartezeit</em></span><span class="ts-info" tabindex="0" role="button" aria-label="Info zur Terminverfügbarkeit" onclick="event.stopPropagation();this.classList.toggle('open')"><span class="ts-info-icon">i</span><span class="ts-info-tip" data-lang="ts-info-tip">Um dieses Versprechen einzuhalten, werden w&ouml;chentlich innerhalb der regul&auml;ren Arbeitszeiten gezielt Termine f&uuml;r Notf&auml;lle und besonders dringende F&auml;lle freigehalten. Ausgenommen sind Abwesenheitszeiten, etwa durch Urlaub oder Fortbildungen.</span></span></h2>
   <p class="ts-sub" data-lang="ts-sub">Bei anderen noch auf der Warteliste &mdash; bei mir schon in der Therapie.</p>
   <button class="ts-cta" data-lang="ts-cta" onclick="document.getElementById('kontakt').scrollIntoView({behavior:'smooth'})">Jetzt Termin buchen</button>
 </section>
@@ -1501,6 +1506,8 @@ body.dev-mode .debug-snake-button {
           <label for="f-datenschutz-box" onclick="toggleDatenschutz()" style="font-size:12px;color:var(--muted);line-height:1.6;cursor:pointer;" data-lang="f-datenschutz-label">Ich habe die <a href="#" onclick="openDatenschutz();return false;" style="color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.3);">Datenschutzerklärung</a> gelesen und stimme der Verarbeitung meiner Daten zu.</label>
         </div>
 
+        <button type="button" class="btn-rev-write-trigger" onclick="openAGB()" style="align-self:flex-start;margin-top:2px;" data-lang="agb-info-btn">Infos zur Terminabsage</button>
+
         <button class="btn-submit" id="formSubmit" data-lang="f-submit">Anfrage senden &rarr;</button>
         <div id="form-msg" style="display:none;margin-top:16px;padding:14px 20px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);font-size:13px;letter-spacing:0.04em;color:var(--gold);"></div>
       </div>
@@ -1628,7 +1635,7 @@ body.dev-mode .debug-snake-button {
     <button class="imp-close" onclick="document.getElementById('impressum-modal').classList.remove('open')">&#x2715;</button>
 
     <div class="imp-eyebrow">Rechtliches</div>
-    <h2 class="imp-title">Impressum</h2>
+    <h2 class="imp-title">Impressum &amp; AGB</h2>
 
     <div class="imp-section">
       <div class="imp-section-title">Diensteanbieter</div>
@@ -1681,6 +1688,52 @@ body.dev-mode .debug-snake-button {
         Die Inhalte dieser Website wurden mit gr&ouml;&szlig;ter Sorgfalt erstellt. F&uuml;r die Richtigkeit, Vollst&auml;ndigkeit und Aktualit&auml;t der Inhalte wird jedoch keine Gew&auml;hr &uuml;bernommen. Als Diensteanbieter sind wir gem&auml;&szlig; den einschl&auml;gigen gesetzlichen Bestimmungen f&uuml;r eigene Inhalte auf diesen Seiten verantwortlich.
       </p>
     </div>
+
+    <p class="imp-eyebrow" style="margin-top:8px;">Vertragsbedingungen</p>
+    <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--white);margin-bottom:20px;">Allgemeine Gesch&auml;ftsbedingungen</h3>
+
+    <div data-lang="agb-body"><div class="imp-section">
+      <p class="imp-section-title">1. Geltungsbereich</p>
+      <p>
+        Diese Allgemeinen Gesch&auml;ftsbedingungen gelten f&uuml;r s&auml;mtliche Behandlungs- und Beratungsleistungen, die im Rahmen der Praxis PAN Physio &ndash; Benedikt Pani&#x107; vereinbart und erbracht werden, unabh&auml;ngig davon, ob die Terminvereinbarung online, telefonisch oder pers&ouml;nlich erfolgt.
+      </p>
+    </div>
+
+    <div class="imp-section">
+      <p class="imp-section-title">2. Leistungsumfang</p>
+      <p>
+        Die angebotenen physiotherapeutischen Leistungen dienen der Verbesserung von Beweglichkeit, Belastbarkeit und k&ouml;rperlicher Funktion und ersetzen keine &auml;rztliche Diagnose oder Behandlung. Patientinnen und Patienten sind verpflichtet, gesundheitsrelevante Informationen &ndash; etwa bestehende Erkrankungen, Verletzungen oder Medikamenteneinnahme &ndash; wahrheitsgem&auml;&szlig; und vollst&auml;ndig anzugeben, da diese f&uuml;r eine sichere Behandlung erforderlich sind.
+      </p>
+    </div>
+
+    <div class="imp-section" id="storno-section">
+      <p class="imp-section-title">3. Terminvereinbarung und Absage</p>
+      <p>
+        Vereinbarte Termine sind verbindlich. Eine Absage oder Verschiebung ist bis sp&auml;testens <strong style="color:var(--white)">24 Stunden</strong> vor dem vereinbarten Termin kostenfrei m&ouml;glich. Erfolgt die Absage sp&auml;ter oder wird der Termin nicht wahrgenommen, wird das vereinbarte Honorar f&uuml;r die ausgefallene Behandlungseinheit in Rechnung gestellt, sofern der Termin nicht anderweitig vergeben werden kann. Ausgenommen sind F&auml;lle nachgewiesener kurzfristiger Verhinderung aus wichtigem Grund (z.&nbsp;B. akute Erkrankung, Unfall).<br><br>
+        Rechtsgrundlage ist &sect; 1168 ABGB, wonach dem Auftragnehmer bei Verhinderung der Leistungserbringung aus Gr&uuml;nden auf Seiten des Auftraggebers das vereinbarte Entgelt unter Anrechnung ersparter Aufwendungen zusteht.
+      </p>
+    </div>
+
+    <div class="imp-section">
+      <p class="imp-section-title">4. Zahlungsbedingungen</p>
+      <p>
+        Das vereinbarte Honorar ist, sofern nicht anders vereinbart, innerhalb von <strong style="color:var(--white)">14 Tagen</strong> nach Erhalt der Rechnung ohne Abzug f&auml;llig. Bei Zahlungsverzug gelten die gesetzlichen Bestimmungen, insbesondere hinsichtlich der Verzugszinsen.
+      </p>
+    </div>
+
+    <div class="imp-section">
+      <p class="imp-section-title">5. Gutscheine</p>
+      <p>
+        Ausgestellte Gutscheine sind ab dem Datum der Ausstellung <strong style="color:var(--white)">ein Jahr</strong> g&uuml;ltig. Nach Ablauf dieser Frist ist eine Einl&ouml;sung nicht mehr m&ouml;glich.
+      </p>
+    </div>
+
+    <div class="imp-section">
+      <p class="imp-section-title">6. Schlussbestimmungen</p>
+      <p>
+        Sollten einzelne Bestimmungen dieser Allgemeinen Gesch&auml;ftsbedingungen unwirksam sein oder werden, bleibt die Wirksamkeit der &uuml;brigen Bestimmungen hiervon unber&uuml;hrt. An die Stelle der unwirksamen Bestimmung tritt eine Regelung, die dem wirtschaftlichen Zweck der unwirksamen Bestimmung am n&auml;chsten kommt. F&uuml;r Vertr&auml;ge mit PAN Physio gilt &ouml;sterreichisches Recht.
+      </p>
+    </div></div>
 
     <p class="imp-note">
       Gem&auml;&szlig; &sect; 5 ECG (E-Commerce-Gesetz) und &sect; 25 MedienG verpflichtet. &bull; Stand: 2026
@@ -1764,6 +1817,18 @@ body.dev-mode .debug-snake-button {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" crossorigin="anonymous"></script>
 <script>
+
+// ── TERMIN-INFO TOOLTIP ─────────────────────────────────────
+document.querySelectorAll('.ts-info').forEach(el=>{
+  el.addEventListener('keydown',e=>{
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();el.classList.toggle('open');}
+  });
+});
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.ts-info')){
+    document.querySelectorAll('.ts-info.open').forEach(el=>el.classList.remove('open'));
+  }
+});
 
 // ── NAV ─────────────────────────────────────────────────────
 document.addEventListener('keydown',e=>{
@@ -2627,6 +2692,13 @@ function openImpressum(){document.getElementById('impressum-modal').classList.ad
 function closeImpressum(){document.getElementById('impressum-modal').classList.remove('open');}
 function openDatenschutz(){document.getElementById('datenschutz-modal').classList.add('open');}
 function closeDatenschutz(){document.getElementById('datenschutz-modal').classList.remove('open');}
+function openAGB(){
+  document.getElementById('impressum-modal').classList.add('open');
+  setTimeout(()=>{
+    const el = document.getElementById('storno-section');
+    if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 50);
+}
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){closeImpressum();closeDatenschutz();closeReviews();closeWerdegang();closeLeistungInfo();}
 });
@@ -4018,7 +4090,7 @@ document.getElementById('egg4-modal').addEventListener('click', function(e){
     <a href="pan-physio_25/ueber_mich.html" data-lang="nav-ueber">&#xDC;ber mich</a><a href="#leistungen" data-lang="nav-leistungen">Leistungen</a>
     <a href="pan-physio_25/preise.html" data-lang="nav-preise">Preise</a><a href="portfolio_33.html" target="_blank">Benedikt Pani&#x107;</a>
     <a href="#kontakt" data-lang="nav-kontakt">Kontakt</a>
-    <a href="#" onclick="document.getElementById('impressum-modal').classList.add('open');return false;" data-lang="footer-impressum">Impressum</a><a href="#" onclick="openDatenschutz();return false;" data-lang="footer-datenschutz">Datenschutz</a>
+    <a href="#" onclick="document.getElementById('impressum-modal').classList.add('open');return false;" data-lang="footer-impressum">Impressum &amp; AGB</a><a href="#" onclick="openDatenschutz();return false;" data-lang="footer-datenschutz">Datenschutz</a>
   </nav>
   <div class="footer-copy" data-lang="footer-copy">&copy; 2026 PAN Physio. Alle Rechte vorbehalten.</div>
 </footer>
@@ -4045,6 +4117,7 @@ const TRANSLATIONS = {
     'hero-tagline':       'Individuelle Therapie nach Ma\u00df \u2014 in der Praxis oder direkt bei Ihnen zu Hause.',
     // Termin Slogan
     'ts-title':           'Termin ohne <em>Wartezeit</em>',
+    'ts-info-tip':        'Um dieses Versprechen einzuhalten, werden w\u00f6chentlich innerhalb der regul\u00e4ren Arbeitszeiten gezielt Termine f\u00fcr Notf\u00e4lle und besonders dringende F\u00e4lle freigehalten. Ausgenommen sind Abwesenheitszeiten, etwa durch Urlaub oder Fortbildungen.',
     'ts-sub':             'Bei anderen noch auf der Warteliste \u2014 bei mir schon in der Therapie.',
     'ts-cta':             'Jetzt Termin buchen',
     // \u00dcber mich
@@ -4205,8 +4278,51 @@ const TRANSLATIONS = {
     'rv-ph-ort':          'Wels',
     'rv-ph-text':         'Beschreiben Sie Ihre Erfahrung mit PAN Physio…',
     'footer-copy':        '\u00a9 2026 PAN Physio. Alle Rechte vorbehalten.',
-    'footer-impressum':   'Impressum',
+    'footer-impressum':   'Impressum &amp; AGB',
     'footer-datenschutz': 'Datenschutz',
+    'agb-info-btn':       'Infos zur Terminabsage',
+    'agb-body':           `<div class="imp-section">
+      <p class="imp-section-title">1. Geltungsbereich</p>
+      <p>
+        Diese Allgemeinen Gesch\u00e4ftsbedingungen gelten f\u00fcr s\u00e4mtliche Behandlungs- und Beratungsleistungen, die im Rahmen der Praxis PAN Physio \u2013 Benedikt Pani\u0107 vereinbart und erbracht werden, unabh\u00e4ngig davon, ob die Terminvereinbarung online, telefonisch oder pers\u00f6nlich erfolgt.
+      </p>
+    </div>
+
+    <div class="imp-section">
+      <p class="imp-section-title">2. Leistungsumfang</p>
+      <p>
+        Die angebotenen physiotherapeutischen Leistungen dienen der Verbesserung von Beweglichkeit, Belastbarkeit und k\u00f6rperlicher Funktion und ersetzen keine \u00e4rztliche Diagnose oder Behandlung. Patientinnen und Patienten sind verpflichtet, gesundheitsrelevante Informationen \u2013 etwa bestehende Erkrankungen, Verletzungen oder Medikamenteneinnahme \u2013 wahrheitsgem\u00e4\u00df und vollst\u00e4ndig anzugeben, da diese f\u00fcr eine sichere Behandlung erforderlich sind.
+      </p>
+    </div>
+
+    <div class="imp-section" id="storno-section">
+      <p class="imp-section-title">3. Terminvereinbarung und Absage</p>
+      <p>
+        Vereinbarte Termine sind verbindlich. Eine Absage oder Verschiebung ist bis sp\u00e4testens <strong style="color:var(--white)">24 Stunden</strong> vor dem vereinbarten Termin kostenfrei m\u00f6glich. Erfolgt die Absage sp\u00e4ter oder wird der Termin nicht wahrgenommen, wird das vereinbarte Honorar f\u00fcr die ausgefallene Behandlungseinheit in Rechnung gestellt, sofern der Termin nicht anderweitig vergeben werden kann. Ausgenommen sind F\u00e4lle nachgewiesener kurzfristiger Verhinderung aus wichtigem Grund (z.&nbsp;B. akute Erkrankung, Unfall).<br><br>
+        Rechtsgrundlage ist \u00a7 1168 ABGB, wonach dem Auftragnehmer bei Verhinderung der Leistungserbringung aus Gr\u00fcnden auf Seiten des Auftraggebers das vereinbarte Entgelt unter Anrechnung ersparter Aufwendungen zusteht.
+      </p>
+    </div>
+
+    <div class="imp-section">
+      <p class="imp-section-title">4. Zahlungsbedingungen</p>
+      <p>
+        Das vereinbarte Honorar ist, sofern nicht anders vereinbart, innerhalb von <strong style="color:var(--white)">14 Tagen</strong> nach Erhalt der Rechnung ohne Abzug f\u00e4llig. Bei Zahlungsverzug gelten die gesetzlichen Bestimmungen, insbesondere hinsichtlich der Verzugszinsen.
+      </p>
+    </div>
+
+    <div class="imp-section">
+      <p class="imp-section-title">5. Gutscheine</p>
+      <p>
+        Ausgestellte Gutscheine sind ab dem Datum der Ausstellung <strong style="color:var(--white)">ein Jahr</strong> g\u00fcltig. Nach Ablauf dieser Frist ist eine Einl\u00f6sung nicht mehr m\u00f6glich.
+      </p>
+    </div>
+
+    <div class="imp-section">
+      <p class="imp-section-title">6. Schlussbestimmungen</p>
+      <p>
+        Sollten einzelne Bestimmungen dieser Allgemeinen Gesch\u00e4ftsbedingungen unwirksam sein oder werden, bleibt die Wirksamkeit der \u00fcbrigen Bestimmungen hiervon unber\u00fchrt. An die Stelle der unwirksamen Bestimmung tritt eine Regelung, die dem wirtschaftlichen Zweck der unwirksamen Bestimmung am n\u00e4chsten kommt. F\u00fcr Vertr\u00e4ge mit PAN Physio gilt \u00f6sterreichisches Recht.
+      </p>
+    </div>`,
     // Easter Eggs
     'egg1-label':  'Aufmerksamkeit \u2014 Easter Egg entdeckt',
     'egg1-title':  'Gratuliere.',
@@ -4337,6 +4453,7 @@ const TRANSLATIONS = {
     'hero-tagline':       'Tailored physiotherapy \u2014 in the clinic or in the comfort of your own home.',
     // Termin Slogan
     'ts-title':           'No <em>waiting list.</em>',
+    'ts-info-tip':        'To keep this promise, appointment slots are reserved every week during regular working hours for emergencies and particularly urgent cases. This excludes periods of absence, such as holidays or professional training.',
     'ts-sub':             'While others are still waiting for an appointment, you\u2019re already in treatment.',
     'ts-cta':             'Book an appointment now',
     // About Me
@@ -4439,8 +4556,51 @@ const TRANSLATIONS = {
     'scb-label':          'Enter Code',
     // Footer
     'footer-copy':        '\u00a9 2026 PAN Physio. All rights reserved.',
-    'footer-impressum':   'Legal Notice',
+    'footer-impressum':   'Legal Notice &amp; Terms',
     'footer-datenschutz': 'Privacy Policy',
+    'agb-info-btn':       'Cancellation Info',
+    'agb-body':           `<div class="imp-section">
+      <p class="imp-section-title">1. Scope</p>
+      <p>
+        These Terms and Conditions apply to all treatment and consultation services arranged and provided through the practice PAN Physio – Benedikt Panić, regardless of whether the appointment was booked online, by phone, or in person.
+      </p>
+    </div>
+
+    <div class="imp-section">
+      <p class="imp-section-title">2. Scope of Services</p>
+      <p>
+        The physiotherapy services offered are aimed at improving mobility, resilience, and physical function, and do not replace a medical diagnosis or treatment by a physician. Patients are required to disclose relevant health information — such as existing conditions, injuries, or medication — truthfully and completely, as this is necessary for safe treatment.
+      </p>
+    </div>
+
+    <div class="imp-section" id="storno-section">
+      <p class="imp-section-title">3. Booking and Cancellation</p>
+      <p>
+        Confirmed appointments are binding. A cancellation or rescheduling is possible free of charge up to <strong style="color:var(--white)">24 hours</strong> before the scheduled appointment. If cancelled later, or if the appointment is missed without notice, the agreed fee for the missed session will be charged, unless the slot can be rebooked otherwise. Exceptions apply in cases of proven short-notice incapacity for an important reason (e.g. sudden illness, accident).<br><br>
+        The legal basis is Section 1168 of the Austrian Civil Code (ABGB), under which a service provider is entitled to the agreed fee if performance is prevented for reasons attributable to the client, offset against any expenses saved as a result.
+      </p>
+    </div>
+
+    <div class="imp-section">
+      <p class="imp-section-title">4. Payment Terms</p>
+      <p>
+        Unless otherwise agreed, the agreed fee is due in full within <strong style="color:var(--white)">14 days</strong> of receipt of the invoice. In the event of late payment, the applicable statutory provisions apply, in particular regarding default interest.
+      </p>
+    </div>
+
+    <div class="imp-section">
+      <p class="imp-section-title">5. Vouchers</p>
+      <p>
+        Issued vouchers are valid for <strong style="color:var(--white)">one year</strong> from the date of issue. Redemption is no longer possible after this period has expired.
+      </p>
+    </div>
+
+    <div class="imp-section">
+      <p class="imp-section-title">6. Final Provisions</p>
+      <p>
+        Should individual provisions of these Terms and Conditions be or become invalid, the validity of the remaining provisions shall remain unaffected. The invalid provision shall be replaced by a rule that most closely reflects its economic purpose. Contracts with PAN Physio are governed by Austrian law.
+      </p>
+    </div>`,
     // Easter Eggs
     'egg1-label':  'Attention \u2014 Easter Egg discovered',
     'egg1-title':  'Congratulations.',
