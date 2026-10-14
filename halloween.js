@@ -1,6 +1,6 @@
 /* ══════════════════════════════════════════════════════════════
    HALLOWEEN-MODUL — eigenständig, greift in nichts anderes ein.
-   Aktiv automatisch vom 15. Oktober bis 1. November (jedes Jahr, ohne
+   Aktiv automatisch vom 14. bis 31. Oktober, 23:59 (jedes Jahr, ohne
    dass etwas umgestellt werden muss).
 
    Test/Vorschau außerhalb der Saison:
@@ -32,8 +32,7 @@
       if(params.get('halloween') === '0') return false;
     }catch(e){}
     var now = new Date();
-    return (now.getMonth() === 9 && now.getDate() >= 15) ||
-           (now.getMonth() === 10 && now.getDate() === 1);
+    return now.getMonth() === 9 && now.getDate() >= 14 && now.getDate() <= 31;
   }
 
   function addLeaves(){
